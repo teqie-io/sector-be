@@ -8,7 +8,7 @@ export default buildConfig({
   admin: {
     user: User.slug,
   },
-  cors: ['http://localhost:3001', 'https://sector-alpha.teqie.dev/'],
+  cors: ['http://localhost:3000', 'http://localhost:3001', 'https://sector-alpha.teqie.dev/'],
   collections: [
     User,
     Card,
