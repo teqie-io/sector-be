@@ -1,21 +1,25 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
 
-import {User, Product, FavouriteProduct, Bidding, LiveBreak} from './collections';
+import {User, Card, FavouriteProduct, Bidding, LiveBreak} from './collections';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
     user: User.slug,
   },
+  cors: ['http://localhost:3001', 'https://sector-alpha.teqie.dev/'],
   collections: [
     User,
-    Product,
+    Card,
     FavouriteProduct,
     Bidding,
     LiveBreak,
     {
       slug: 'media',
+      access: {
+        read: () => true,
+      },
       fields: [
         {
           name: 'alt',

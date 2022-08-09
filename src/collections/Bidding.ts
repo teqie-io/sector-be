@@ -3,16 +3,16 @@ import { CollectionConfig } from 'payload/types';
 const Bidding: CollectionConfig = {
   slug: 'bidding',
   admin: {
-    useAsTitle: 'product'
+    useAsTitle: 'card'
   },
   access: {
     read: () => true,
   },
   fields: [
     {
-      name: 'product',
+      name: 'card',
       type: 'relationship',
-      relationTo: 'product',
+      relationTo: 'card',
       index: true,
       required: true
     },

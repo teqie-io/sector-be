@@ -11,9 +11,9 @@ const FavouriteProduct: CollectionConfig = {
       required: true
     },
     {
-      name: 'product',
+      name: 'card',
       type: 'relationship',
-      relationTo: 'product',
+      relationTo: 'card',
       index: true,
       required: true
     },

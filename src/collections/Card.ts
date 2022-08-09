@@ -1,7 +1,7 @@
 import { CollectionConfig } from 'payload/types';
 
-const Product: CollectionConfig = {
-  slug: 'product',
+const Card: CollectionConfig = {
+  slug: 'card',
   admin: {
     useAsTitle: 'playerName',
     defaultColumns: ['year', 'brand', 'playerName']
@@ -90,4 +90,4 @@ const Product: CollectionConfig = {
   ],
 }
 
-export default Product;
+export default Card;
