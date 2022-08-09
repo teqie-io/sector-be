@@ -1,17 +1,29 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
 
-import Users from './collections/Users';
-import Products from "./collections/Products";
+import {User, Product, FavouriteProduct, Bidding, LiveBreak} from './collections';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
-    user: Users.slug,
+    user: User.slug,
   },
   collections: [
-    Users,
-    Products
+    User,
+    Product,
+    FavouriteProduct,
+    Bidding,
+    LiveBreak,
+    {
+      slug: 'media',
+      fields: [
+        {
+          name: 'alt',
+          type: 'text',
+        },
+      ],
+      upload: true,
+    },
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
