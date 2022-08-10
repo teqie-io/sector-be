@@ -1,17 +1,33 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
 
-import Users from './collections/Users';
-import Products from "./collections/Products";
+import {User, Card, FavouriteProduct, Bidding, LiveBreak} from './collections';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
   admin: {
-    user: Users.slug,
+    user: User.slug,
   },
+  cors: ['http://localhost:3000', 'http://localhost:3001', 'https://sector-alpha.teqie.dev/'],
   collections: [
-    Users,
-    Products
+    User,
+    Card,
+    FavouriteProduct,
+    Bidding,
+    LiveBreak,
+    {
+      slug: 'media',
+      access: {
+        read: () => true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'text',
+        },
+      ],
+      upload: true,
+    },
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
