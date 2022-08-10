@@ -4,11 +4,11 @@ import path from 'path';
 import {User, Card, FavouriteProduct, Bidding, LiveBreak} from './collections';
 
 export default buildConfig({
-  serverURL: 'http://localhost:3000',
+  serverURL: 'http://0.0.0.0:3000',
   admin: {
     user: User.slug,
   },
-  cors: ['http://localhost:3000', 'http://localhost:3001', 'https://sector-alpha.teqie.dev/'],
+  cors: '*',
   collections: [
     User,
     Card,
