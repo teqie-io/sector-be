@@ -54,31 +54,11 @@ const LiveBreak: CollectionConfig = {
       required: true
     },
     {
-      name: 'specialFeature',
-      type: 'text',
-      index: true,
-      required: true
-    },
-    {
       name: 'brand',
       type: 'text',
       index: true,
       required: true
-    },
-    {
-      name: 'gradeBy',
-      type: 'text',
-      index: true,
-      required: true
-    },
-    {
-      name: 'rating',
-      type: 'number',
-      min: 0,
-      max: 10,
-      index: true,
-      required: true
-    },
+    }
   ],
 }
 
