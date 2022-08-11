@@ -43,8 +43,8 @@ const LiveBreak: CollectionConfig = {
     {
       name: 'leagueTeam',
       type: 'select',
-      options: ['NBA', 'NFL', 'MLB', 'NHL', 'Random team'],
-      defaultValue: 'Random team',
+      options: ['NBA', 'NFL', 'MLB', 'NHL', 'Randomteam'],
+      defaultValue: 'Randomteam',
       index: true
     },
     {

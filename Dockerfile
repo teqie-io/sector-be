@@ -12,6 +12,4 @@ RUN yarn build  && yarn cache clean
 EXPOSE 3000
 ENV NODE_ENV=production
 
-
 CMD ["yarn", "serve"]
-# CMD ["ls", "-la"]

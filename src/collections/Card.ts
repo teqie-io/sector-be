@@ -2,6 +2,10 @@ import { CollectionConfig } from 'payload/types';
 
 const Card: CollectionConfig = {
   slug: 'card',
+  labels: {
+    singular: 'card',
+    plural: 'cards'
+  },
   admin: {
     useAsTitle: 'playerName',
     defaultColumns: ['year', 'brand', 'playerName']
@@ -25,8 +29,8 @@ const Card: CollectionConfig = {
     {
       name: 'type',
       type: 'select',
-      options: ['Single cards', 'Boxes'],
-      defaultValue: 'Single cards',
+      options: ['Singlecards', 'Boxes'],
+      defaultValue: 'Singlecards',
       index: true
     },
     {
@@ -51,7 +55,7 @@ const Card: CollectionConfig = {
     {
       name: 'leagueTeam',
       type: 'select',
-      options: ['NBA', 'NFL', 'MLB', 'NHL', 'Random team'],
+      options: ['NBA', 'NFL', 'MLB', 'NHL', 'Randomteam'],
       index: true,
       required: true
     },
