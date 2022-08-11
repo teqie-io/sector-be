@@ -1,0 +1,2264 @@
+type Query {
+  User(id: String!, draft: Boolean): User
+  Users(where: User_where, draft: Boolean, page: Int, limit: Int, sort: String): Users
+  meUser: userMe
+  initializedUser: Boolean
+  card(id: String!, draft: Boolean): card
+  cards(where: card_where, draft: Boolean, page: Int, limit: Int, sort: String): cards
+  FavouriteProduct(id: String!, draft: Boolean): FavouriteProduct
+  FavouriteProducts(where: FavouriteProduct_where, draft: Boolean, page: Int, limit: Int, sort: String): FavouriteProducts
+  Bidding(id: String!, draft: Boolean): Bidding
+  Biddings(where: Bidding_where, draft: Boolean, page: Int, limit: Int, sort: String): Biddings
+  LiveBreak(id: String!, draft: Boolean): LiveBreak
+  LiveBreaks(where: LiveBreak_where, draft: Boolean, page: Int, limit: Int, sort: String): LiveBreaks
+  Media(id: String!, draft: Boolean): Media
+  allMedia(where: Media_where, draft: Boolean, page: Int, limit: Int, sort: String): allMedia
+  Preference(key: String): Preference
+  Access: Access
+}
+
+type User {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: EmailAddress
+  resetPasswordToken: String
+  resetPasswordExpiration: DateTime
+  loginAttempts: Float
+  lockUntil: DateTime
+  fullName: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""
+A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+"""
+scalar EmailAddress @specifiedBy(url: "https://www.w3.org/Protocols/rfc822/")
+
+type Users {
+  docs: [User]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Boolean
+  nextPage: Boolean
+}
+
+input User_where {
+  email: User_email_operator
+  fullName: User_fullName_operator
+  id: User_id_operator
+  createdAt: User_createdAt_operator
+  updatedAt: User_updatedAt_operator
+  OR: [User_where_or]
+  AND: [User_where_and]
+}
+
+input User_email_operator {
+  equals: EmailAddress
+  not_equals: EmailAddress
+  like: EmailAddress
+  contains: EmailAddress
+  exists: Boolean
+}
+
+input User_fullName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input User_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+input User_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input User_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input User_where_or {
+  email: User_email_operator
+  fullName: User_fullName_operator
+  id: User_id_operator
+  createdAt: User_createdAt_operator
+  updatedAt: User_updatedAt_operator
+}
+
+input User_where_and {
+  email: User_email_operator
+  fullName: User_fullName_operator
+  id: User_id_operator
+  createdAt: User_createdAt_operator
+  updatedAt: User_updatedAt_operator
+}
+
+type userMe {
+  token: String
+  user: User
+  exp: Int
+  collection: String
+}
+
+type card {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  image(where: card_Image_where): Media
+  playerName: String!
+  type: card_type
+  sportType: String!
+  year: DateTime!
+  price: Float!
+  leagueTeam: card_leagueTeam!
+  seller: User
+  specialFeature: String!
+  brand: String!
+  gradeBy: String!
+  rating: Float!
+}
+
+type Media {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  alt: String
+}
+
+input card_Image_where {
+  url: card_Image_url_operator
+  filename: card_Image_filename_operator
+  mimeType: card_Image_mimeType_operator
+  filesize: card_Image_filesize_operator
+  alt: card_Image_alt_operator
+  id: card_Image_id_operator
+  OR: [card_Image_where_or]
+  AND: [card_Image_where_and]
+}
+
+input card_Image_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input card_Image_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input card_Image_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input card_Image_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input card_Image_alt_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input card_Image_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input card_Image_where_or {
+  url: card_Image_url_operator
+  filename: card_Image_filename_operator
+  mimeType: card_Image_mimeType_operator
+  filesize: card_Image_filesize_operator
+  alt: card_Image_alt_operator
+  id: card_Image_id_operator
+}
+
+input card_Image_where_and {
+  url: card_Image_url_operator
+  filename: card_Image_filename_operator
+  mimeType: card_Image_mimeType_operator
+  filesize: card_Image_filesize_operator
+  alt: card_Image_alt_operator
+  id: card_Image_id_operator
+}
+
+enum card_type {
+  Singlecards
+  Boxes
+}
+
+enum card_leagueTeam {
+  NBA
+  NFL
+  MLB
+  NHL
+  Randomteam
+}
+
+type cards {
+  docs: [card]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Boolean
+  nextPage: Boolean
+}
+
+input card_where {
+  image: card_image_operator
+  playerName: card_playerName_operator
+  type: card_type_operator
+  sportType: card_sportType_operator
+  year: card_year_operator
+  price: card_price_operator
+  leagueTeam: card_leagueTeam_operator
+  seller: card_seller_operator
+  specialFeature: card_specialFeature_operator
+  brand: card_brand_operator
+  gradeBy: card_gradeBy_operator
+  rating: card_rating_operator
+  id: card_id_operator
+  createdAt: card_createdAt_operator
+  updatedAt: card_updatedAt_operator
+  OR: [card_where_or]
+  AND: [card_where_and]
+}
+
+input card_image_operator {
+  equals: String
+  not_equals: String
+}
+
+input card_playerName_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input card_type_operator {
+  equals: card_type_Input
+  not_equals: card_type_Input
+  in: [card_type_Input]
+  not_in: [card_type_Input]
+  all: [card_type_Input]
+  exists: Boolean
+}
+
+enum card_type_Input {
+  Singlecards
+  Boxes
+}
+
+input card_sportType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input card_year_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input card_price_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input card_leagueTeam_operator {
+  equals: card_leagueTeam_Input
+  not_equals: card_leagueTeam_Input
+  in: [card_leagueTeam_Input]
+  not_in: [card_leagueTeam_Input]
+  all: [card_leagueTeam_Input]
+}
+
+enum card_leagueTeam_Input {
+  NBA
+  NFL
+  MLB
+  NHL
+  Randomteam
+}
+
+input card_seller_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input card_specialFeature_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input card_brand_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input card_gradeBy_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input card_rating_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input card_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input card_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input card_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input card_where_or {
+  image: card_image_operator
+  playerName: card_playerName_operator
+  type: card_type_operator
+  sportType: card_sportType_operator
+  year: card_year_operator
+  price: card_price_operator
+  leagueTeam: card_leagueTeam_operator
+  seller: card_seller_operator
+  specialFeature: card_specialFeature_operator
+  brand: card_brand_operator
+  gradeBy: card_gradeBy_operator
+  rating: card_rating_operator
+  id: card_id_operator
+  createdAt: card_createdAt_operator
+  updatedAt: card_updatedAt_operator
+}
+
+input card_where_and {
+  image: card_image_operator
+  playerName: card_playerName_operator
+  type: card_type_operator
+  sportType: card_sportType_operator
+  year: card_year_operator
+  price: card_price_operator
+  leagueTeam: card_leagueTeam_operator
+  seller: card_seller_operator
+  specialFeature: card_specialFeature_operator
+  brand: card_brand_operator
+  gradeBy: card_gradeBy_operator
+  rating: card_rating_operator
+  id: card_id_operator
+  createdAt: card_createdAt_operator
+  updatedAt: card_updatedAt_operator
+}
+
+type FavouriteProduct {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User
+  card: card
+}
+
+type FavouriteProducts {
+  docs: [FavouriteProduct]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Boolean
+  nextPage: Boolean
+}
+
+input FavouriteProduct_where {
+  user: FavouriteProduct_user_operator
+  card: FavouriteProduct_card_operator
+  id: FavouriteProduct_id_operator
+  createdAt: FavouriteProduct_createdAt_operator
+  updatedAt: FavouriteProduct_updatedAt_operator
+  OR: [FavouriteProduct_where_or]
+  AND: [FavouriteProduct_where_and]
+}
+
+input FavouriteProduct_user_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input FavouriteProduct_card_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input FavouriteProduct_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input FavouriteProduct_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input FavouriteProduct_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input FavouriteProduct_where_or {
+  user: FavouriteProduct_user_operator
+  card: FavouriteProduct_card_operator
+  id: FavouriteProduct_id_operator
+  createdAt: FavouriteProduct_createdAt_operator
+  updatedAt: FavouriteProduct_updatedAt_operator
+}
+
+input FavouriteProduct_where_and {
+  user: FavouriteProduct_user_operator
+  card: FavouriteProduct_card_operator
+  id: FavouriteProduct_id_operator
+  createdAt: FavouriteProduct_createdAt_operator
+  updatedAt: FavouriteProduct_updatedAt_operator
+}
+
+type Bidding {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  card: card
+  user: User
+  price: Float!
+}
+
+type Biddings {
+  docs: [Bidding]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Boolean
+  nextPage: Boolean
+}
+
+input Bidding_where {
+  card: Bidding_card_operator
+  user: Bidding_user_operator
+  price: Bidding_price_operator
+  id: Bidding_id_operator
+  createdAt: Bidding_createdAt_operator
+  updatedAt: Bidding_updatedAt_operator
+  OR: [Bidding_where_or]
+  AND: [Bidding_where_and]
+}
+
+input Bidding_card_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Bidding_user_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Bidding_price_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Bidding_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Bidding_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Bidding_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Bidding_where_or {
+  card: Bidding_card_operator
+  user: Bidding_user_operator
+  price: Bidding_price_operator
+  id: Bidding_id_operator
+  createdAt: Bidding_createdAt_operator
+  updatedAt: Bidding_updatedAt_operator
+}
+
+input Bidding_where_and {
+  card: Bidding_card_operator
+  user: Bidding_user_operator
+  price: Bidding_price_operator
+  id: Bidding_id_operator
+  createdAt: Bidding_createdAt_operator
+  updatedAt: Bidding_updatedAt_operator
+}
+
+type LiveBreak {
+  id: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  image(where: LiveBreak_Image_where): Media
+  name: String!
+  sportType: String!
+  year: DateTime!
+  price: Float!
+  leagueTeam: LiveBreak_leagueTeam
+  seller: User
+  brand: String!
+}
+
+input LiveBreak_Image_where {
+  url: LiveBreak_Image_url_operator
+  filename: LiveBreak_Image_filename_operator
+  mimeType: LiveBreak_Image_mimeType_operator
+  filesize: LiveBreak_Image_filesize_operator
+  alt: LiveBreak_Image_alt_operator
+  id: LiveBreak_Image_id_operator
+  OR: [LiveBreak_Image_where_or]
+  AND: [LiveBreak_Image_where_and]
+}
+
+input LiveBreak_Image_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input LiveBreak_Image_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input LiveBreak_Image_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input LiveBreak_Image_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input LiveBreak_Image_alt_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input LiveBreak_Image_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input LiveBreak_Image_where_or {
+  url: LiveBreak_Image_url_operator
+  filename: LiveBreak_Image_filename_operator
+  mimeType: LiveBreak_Image_mimeType_operator
+  filesize: LiveBreak_Image_filesize_operator
+  alt: LiveBreak_Image_alt_operator
+  id: LiveBreak_Image_id_operator
+}
+
+input LiveBreak_Image_where_and {
+  url: LiveBreak_Image_url_operator
+  filename: LiveBreak_Image_filename_operator
+  mimeType: LiveBreak_Image_mimeType_operator
+  filesize: LiveBreak_Image_filesize_operator
+  alt: LiveBreak_Image_alt_operator
+  id: LiveBreak_Image_id_operator
+}
+
+enum LiveBreak_leagueTeam {
+  NBA
+  NFL
+  MLB
+  NHL
+  Randomteam
+}
+
+type LiveBreaks {
+  docs: [LiveBreak]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Boolean
+  nextPage: Boolean
+}
+
+input LiveBreak_where {
+  image: LiveBreak_image_operator
+  name: LiveBreak_name_operator
+  sportType: LiveBreak_sportType_operator
+  year: LiveBreak_year_operator
+  price: LiveBreak_price_operator
+  leagueTeam: LiveBreak_leagueTeam_operator
+  seller: LiveBreak_seller_operator
+  brand: LiveBreak_brand_operator
+  id: LiveBreak_id_operator
+  createdAt: LiveBreak_createdAt_operator
+  updatedAt: LiveBreak_updatedAt_operator
+  OR: [LiveBreak_where_or]
+  AND: [LiveBreak_where_and]
+}
+
+input LiveBreak_image_operator {
+  equals: String
+  not_equals: String
+}
+
+input LiveBreak_name_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input LiveBreak_sportType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input LiveBreak_year_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input LiveBreak_price_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input LiveBreak_leagueTeam_operator {
+  equals: LiveBreak_leagueTeam_Input
+  not_equals: LiveBreak_leagueTeam_Input
+  in: [LiveBreak_leagueTeam_Input]
+  not_in: [LiveBreak_leagueTeam_Input]
+  all: [LiveBreak_leagueTeam_Input]
+  exists: Boolean
+}
+
+enum LiveBreak_leagueTeam_Input {
+  NBA
+  NFL
+  MLB
+  NHL
+  Randomteam
+}
+
+input LiveBreak_seller_operator {
+  equals: String
+  not_equals: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input LiveBreak_brand_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+}
+
+input LiveBreak_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input LiveBreak_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input LiveBreak_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input LiveBreak_where_or {
+  image: LiveBreak_image_operator
+  name: LiveBreak_name_operator
+  sportType: LiveBreak_sportType_operator
+  year: LiveBreak_year_operator
+  price: LiveBreak_price_operator
+  leagueTeam: LiveBreak_leagueTeam_operator
+  seller: LiveBreak_seller_operator
+  brand: LiveBreak_brand_operator
+  id: LiveBreak_id_operator
+  createdAt: LiveBreak_createdAt_operator
+  updatedAt: LiveBreak_updatedAt_operator
+}
+
+input LiveBreak_where_and {
+  image: LiveBreak_image_operator
+  name: LiveBreak_name_operator
+  sportType: LiveBreak_sportType_operator
+  year: LiveBreak_year_operator
+  price: LiveBreak_price_operator
+  leagueTeam: LiveBreak_leagueTeam_operator
+  seller: LiveBreak_seller_operator
+  brand: LiveBreak_brand_operator
+  id: LiveBreak_id_operator
+  createdAt: LiveBreak_createdAt_operator
+  updatedAt: LiveBreak_updatedAt_operator
+}
+
+type allMedia {
+  docs: [Media]
+  totalDocs: Int
+  offset: Int
+  limit: Int
+  totalPages: Int
+  page: Int
+  pagingCounter: Int
+  hasPrevPage: Boolean
+  hasNextPage: Boolean
+  prevPage: Boolean
+  nextPage: Boolean
+}
+
+input Media_where {
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  alt: Media_alt_operator
+  id: Media_id_operator
+  createdAt: Media_createdAt_operator
+  updatedAt: Media_updatedAt_operator
+  OR: [Media_where_or]
+  AND: [Media_where_and]
+}
+
+input Media_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input Media_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input Media_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input Media_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Media_alt_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  exists: Boolean
+}
+
+input Media_id_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Media_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Media_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Media_where_or {
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  alt: Media_alt_operator
+  id: Media_id_operator
+  createdAt: Media_createdAt_operator
+  updatedAt: Media_updatedAt_operator
+}
+
+input Media_where_and {
+  url: Media_url_operator
+  filename: Media_filename_operator
+  mimeType: Media_mimeType_operator
+  filesize: Media_filesize_operator
+  alt: Media_alt_operator
+  id: Media_id_operator
+  createdAt: Media_createdAt_operator
+  updatedAt: Media_updatedAt_operator
+}
+
+type Preference {
+  key: String!
+  value: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Access {
+  canAccessAdmin: Boolean!
+  user: UserAccess
+  card: cardAccess
+  favourite_product: FavouriteProductAccess
+  bidding: BiddingAccess
+  live_break: LiveBreakAccess
+  media: MediaAccess
+}
+
+type UserAccess {
+  fields: UserFields
+  create: UserCreateAccess
+  read: UserReadAccess
+  update: UserUpdateAccess
+  delete: UserDeleteAccess
+  unlock: UserUnlockAccess
+}
+
+type UserFields {
+  email: UserFields_email
+  fullName: UserFields_fullName
+  password: UserFields_password
+}
+
+type UserFields_email {
+  create: UserFields_email_Create
+  read: UserFields_email_Read
+  update: UserFields_email_Update
+  delete: UserFields_email_Delete
+}
+
+type UserFields_email_Create {
+  permission: Boolean!
+}
+
+type UserFields_email_Read {
+  permission: Boolean!
+}
+
+type UserFields_email_Update {
+  permission: Boolean!
+}
+
+type UserFields_email_Delete {
+  permission: Boolean!
+}
+
+type UserFields_fullName {
+  create: UserFields_fullName_Create
+  read: UserFields_fullName_Read
+  update: UserFields_fullName_Update
+  delete: UserFields_fullName_Delete
+}
+
+type UserFields_fullName_Create {
+  permission: Boolean!
+}
+
+type UserFields_fullName_Read {
+  permission: Boolean!
+}
+
+type UserFields_fullName_Update {
+  permission: Boolean!
+}
+
+type UserFields_fullName_Delete {
+  permission: Boolean!
+}
+
+type UserFields_password {
+  create: UserFields_password_Create
+  read: UserFields_password_Read
+  update: UserFields_password_Update
+  delete: UserFields_password_Delete
+}
+
+type UserFields_password_Create {
+  permission: Boolean!
+}
+
+type UserFields_password_Read {
+  permission: Boolean!
+}
+
+type UserFields_password_Update {
+  permission: Boolean!
+}
+
+type UserFields_password_Delete {
+  permission: Boolean!
+}
+
+type UserCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type UserReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UserUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UserDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type UserUnlockAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type cardAccess {
+  fields: cardFields
+  create: cardCreateAccess
+  read: cardReadAccess
+  update: cardUpdateAccess
+  delete: cardDeleteAccess
+}
+
+type cardFields {
+  image: cardFields_image
+  playerName: cardFields_playerName
+  type: cardFields_type
+  sportType: cardFields_sportType
+  year: cardFields_year
+  price: cardFields_price
+  leagueTeam: cardFields_leagueTeam
+  seller: cardFields_seller
+  specialFeature: cardFields_specialFeature
+  brand: cardFields_brand
+  gradeBy: cardFields_gradeBy
+  rating: cardFields_rating
+}
+
+type cardFields_image {
+  create: cardFields_image_Create
+  read: cardFields_image_Read
+  update: cardFields_image_Update
+  delete: cardFields_image_Delete
+}
+
+type cardFields_image_Create {
+  permission: Boolean!
+}
+
+type cardFields_image_Read {
+  permission: Boolean!
+}
+
+type cardFields_image_Update {
+  permission: Boolean!
+}
+
+type cardFields_image_Delete {
+  permission: Boolean!
+}
+
+type cardFields_playerName {
+  create: cardFields_playerName_Create
+  read: cardFields_playerName_Read
+  update: cardFields_playerName_Update
+  delete: cardFields_playerName_Delete
+}
+
+type cardFields_playerName_Create {
+  permission: Boolean!
+}
+
+type cardFields_playerName_Read {
+  permission: Boolean!
+}
+
+type cardFields_playerName_Update {
+  permission: Boolean!
+}
+
+type cardFields_playerName_Delete {
+  permission: Boolean!
+}
+
+type cardFields_type {
+  create: cardFields_type_Create
+  read: cardFields_type_Read
+  update: cardFields_type_Update
+  delete: cardFields_type_Delete
+}
+
+type cardFields_type_Create {
+  permission: Boolean!
+}
+
+type cardFields_type_Read {
+  permission: Boolean!
+}
+
+type cardFields_type_Update {
+  permission: Boolean!
+}
+
+type cardFields_type_Delete {
+  permission: Boolean!
+}
+
+type cardFields_sportType {
+  create: cardFields_sportType_Create
+  read: cardFields_sportType_Read
+  update: cardFields_sportType_Update
+  delete: cardFields_sportType_Delete
+}
+
+type cardFields_sportType_Create {
+  permission: Boolean!
+}
+
+type cardFields_sportType_Read {
+  permission: Boolean!
+}
+
+type cardFields_sportType_Update {
+  permission: Boolean!
+}
+
+type cardFields_sportType_Delete {
+  permission: Boolean!
+}
+
+type cardFields_year {
+  create: cardFields_year_Create
+  read: cardFields_year_Read
+  update: cardFields_year_Update
+  delete: cardFields_year_Delete
+}
+
+type cardFields_year_Create {
+  permission: Boolean!
+}
+
+type cardFields_year_Read {
+  permission: Boolean!
+}
+
+type cardFields_year_Update {
+  permission: Boolean!
+}
+
+type cardFields_year_Delete {
+  permission: Boolean!
+}
+
+type cardFields_price {
+  create: cardFields_price_Create
+  read: cardFields_price_Read
+  update: cardFields_price_Update
+  delete: cardFields_price_Delete
+}
+
+type cardFields_price_Create {
+  permission: Boolean!
+}
+
+type cardFields_price_Read {
+  permission: Boolean!
+}
+
+type cardFields_price_Update {
+  permission: Boolean!
+}
+
+type cardFields_price_Delete {
+  permission: Boolean!
+}
+
+type cardFields_leagueTeam {
+  create: cardFields_leagueTeam_Create
+  read: cardFields_leagueTeam_Read
+  update: cardFields_leagueTeam_Update
+  delete: cardFields_leagueTeam_Delete
+}
+
+type cardFields_leagueTeam_Create {
+  permission: Boolean!
+}
+
+type cardFields_leagueTeam_Read {
+  permission: Boolean!
+}
+
+type cardFields_leagueTeam_Update {
+  permission: Boolean!
+}
+
+type cardFields_leagueTeam_Delete {
+  permission: Boolean!
+}
+
+type cardFields_seller {
+  create: cardFields_seller_Create
+  read: cardFields_seller_Read
+  update: cardFields_seller_Update
+  delete: cardFields_seller_Delete
+}
+
+type cardFields_seller_Create {
+  permission: Boolean!
+}
+
+type cardFields_seller_Read {
+  permission: Boolean!
+}
+
+type cardFields_seller_Update {
+  permission: Boolean!
+}
+
+type cardFields_seller_Delete {
+  permission: Boolean!
+}
+
+type cardFields_specialFeature {
+  create: cardFields_specialFeature_Create
+  read: cardFields_specialFeature_Read
+  update: cardFields_specialFeature_Update
+  delete: cardFields_specialFeature_Delete
+}
+
+type cardFields_specialFeature_Create {
+  permission: Boolean!
+}
+
+type cardFields_specialFeature_Read {
+  permission: Boolean!
+}
+
+type cardFields_specialFeature_Update {
+  permission: Boolean!
+}
+
+type cardFields_specialFeature_Delete {
+  permission: Boolean!
+}
+
+type cardFields_brand {
+  create: cardFields_brand_Create
+  read: cardFields_brand_Read
+  update: cardFields_brand_Update
+  delete: cardFields_brand_Delete
+}
+
+type cardFields_brand_Create {
+  permission: Boolean!
+}
+
+type cardFields_brand_Read {
+  permission: Boolean!
+}
+
+type cardFields_brand_Update {
+  permission: Boolean!
+}
+
+type cardFields_brand_Delete {
+  permission: Boolean!
+}
+
+type cardFields_gradeBy {
+  create: cardFields_gradeBy_Create
+  read: cardFields_gradeBy_Read
+  update: cardFields_gradeBy_Update
+  delete: cardFields_gradeBy_Delete
+}
+
+type cardFields_gradeBy_Create {
+  permission: Boolean!
+}
+
+type cardFields_gradeBy_Read {
+  permission: Boolean!
+}
+
+type cardFields_gradeBy_Update {
+  permission: Boolean!
+}
+
+type cardFields_gradeBy_Delete {
+  permission: Boolean!
+}
+
+type cardFields_rating {
+  create: cardFields_rating_Create
+  read: cardFields_rating_Read
+  update: cardFields_rating_Update
+  delete: cardFields_rating_Delete
+}
+
+type cardFields_rating_Create {
+  permission: Boolean!
+}
+
+type cardFields_rating_Read {
+  permission: Boolean!
+}
+
+type cardFields_rating_Update {
+  permission: Boolean!
+}
+
+type cardFields_rating_Delete {
+  permission: Boolean!
+}
+
+type cardCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type cardReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type cardUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type cardDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FavouriteProductAccess {
+  fields: FavouriteProductFields
+  create: FavouriteProductCreateAccess
+  read: FavouriteProductReadAccess
+  update: FavouriteProductUpdateAccess
+  delete: FavouriteProductDeleteAccess
+}
+
+type FavouriteProductFields {
+  user: FavouriteProductFields_user
+  card: FavouriteProductFields_card
+}
+
+type FavouriteProductFields_user {
+  create: FavouriteProductFields_user_Create
+  read: FavouriteProductFields_user_Read
+  update: FavouriteProductFields_user_Update
+  delete: FavouriteProductFields_user_Delete
+}
+
+type FavouriteProductFields_user_Create {
+  permission: Boolean!
+}
+
+type FavouriteProductFields_user_Read {
+  permission: Boolean!
+}
+
+type FavouriteProductFields_user_Update {
+  permission: Boolean!
+}
+
+type FavouriteProductFields_user_Delete {
+  permission: Boolean!
+}
+
+type FavouriteProductFields_card {
+  create: FavouriteProductFields_card_Create
+  read: FavouriteProductFields_card_Read
+  update: FavouriteProductFields_card_Update
+  delete: FavouriteProductFields_card_Delete
+}
+
+type FavouriteProductFields_card_Create {
+  permission: Boolean!
+}
+
+type FavouriteProductFields_card_Read {
+  permission: Boolean!
+}
+
+type FavouriteProductFields_card_Update {
+  permission: Boolean!
+}
+
+type FavouriteProductFields_card_Delete {
+  permission: Boolean!
+}
+
+type FavouriteProductCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FavouriteProductReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FavouriteProductUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type FavouriteProductDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type BiddingAccess {
+  fields: BiddingFields
+  create: BiddingCreateAccess
+  read: BiddingReadAccess
+  update: BiddingUpdateAccess
+  delete: BiddingDeleteAccess
+}
+
+type BiddingFields {
+  card: BiddingFields_card
+  user: BiddingFields_user
+  price: BiddingFields_price
+}
+
+type BiddingFields_card {
+  create: BiddingFields_card_Create
+  read: BiddingFields_card_Read
+  update: BiddingFields_card_Update
+  delete: BiddingFields_card_Delete
+}
+
+type BiddingFields_card_Create {
+  permission: Boolean!
+}
+
+type BiddingFields_card_Read {
+  permission: Boolean!
+}
+
+type BiddingFields_card_Update {
+  permission: Boolean!
+}
+
+type BiddingFields_card_Delete {
+  permission: Boolean!
+}
+
+type BiddingFields_user {
+  create: BiddingFields_user_Create
+  read: BiddingFields_user_Read
+  update: BiddingFields_user_Update
+  delete: BiddingFields_user_Delete
+}
+
+type BiddingFields_user_Create {
+  permission: Boolean!
+}
+
+type BiddingFields_user_Read {
+  permission: Boolean!
+}
+
+type BiddingFields_user_Update {
+  permission: Boolean!
+}
+
+type BiddingFields_user_Delete {
+  permission: Boolean!
+}
+
+type BiddingFields_price {
+  create: BiddingFields_price_Create
+  read: BiddingFields_price_Read
+  update: BiddingFields_price_Update
+  delete: BiddingFields_price_Delete
+}
+
+type BiddingFields_price_Create {
+  permission: Boolean!
+}
+
+type BiddingFields_price_Read {
+  permission: Boolean!
+}
+
+type BiddingFields_price_Update {
+  permission: Boolean!
+}
+
+type BiddingFields_price_Delete {
+  permission: Boolean!
+}
+
+type BiddingCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type BiddingReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type BiddingUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type BiddingDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LiveBreakAccess {
+  fields: LiveBreakFields
+  create: LiveBreakCreateAccess
+  read: LiveBreakReadAccess
+  update: LiveBreakUpdateAccess
+  delete: LiveBreakDeleteAccess
+}
+
+type LiveBreakFields {
+  image: LiveBreakFields_image
+  name: LiveBreakFields_name
+  sportType: LiveBreakFields_sportType
+  year: LiveBreakFields_year
+  price: LiveBreakFields_price
+  leagueTeam: LiveBreakFields_leagueTeam
+  seller: LiveBreakFields_seller
+  brand: LiveBreakFields_brand
+}
+
+type LiveBreakFields_image {
+  create: LiveBreakFields_image_Create
+  read: LiveBreakFields_image_Read
+  update: LiveBreakFields_image_Update
+  delete: LiveBreakFields_image_Delete
+}
+
+type LiveBreakFields_image_Create {
+  permission: Boolean!
+}
+
+type LiveBreakFields_image_Read {
+  permission: Boolean!
+}
+
+type LiveBreakFields_image_Update {
+  permission: Boolean!
+}
+
+type LiveBreakFields_image_Delete {
+  permission: Boolean!
+}
+
+type LiveBreakFields_name {
+  create: LiveBreakFields_name_Create
+  read: LiveBreakFields_name_Read
+  update: LiveBreakFields_name_Update
+  delete: LiveBreakFields_name_Delete
+}
+
+type LiveBreakFields_name_Create {
+  permission: Boolean!
+}
+
+type LiveBreakFields_name_Read {
+  permission: Boolean!
+}
+
+type LiveBreakFields_name_Update {
+  permission: Boolean!
+}
+
+type LiveBreakFields_name_Delete {
+  permission: Boolean!
+}
+
+type LiveBreakFields_sportType {
+  create: LiveBreakFields_sportType_Create
+  read: LiveBreakFields_sportType_Read
+  update: LiveBreakFields_sportType_Update
+  delete: LiveBreakFields_sportType_Delete
+}
+
+type LiveBreakFields_sportType_Create {
+  permission: Boolean!
+}
+
+type LiveBreakFields_sportType_Read {
+  permission: Boolean!
+}
+
+type LiveBreakFields_sportType_Update {
+  permission: Boolean!
+}
+
+type LiveBreakFields_sportType_Delete {
+  permission: Boolean!
+}
+
+type LiveBreakFields_year {
+  create: LiveBreakFields_year_Create
+  read: LiveBreakFields_year_Read
+  update: LiveBreakFields_year_Update
+  delete: LiveBreakFields_year_Delete
+}
+
+type LiveBreakFields_year_Create {
+  permission: Boolean!
+}
+
+type LiveBreakFields_year_Read {
+  permission: Boolean!
+}
+
+type LiveBreakFields_year_Update {
+  permission: Boolean!
+}
+
+type LiveBreakFields_year_Delete {
+  permission: Boolean!
+}
+
+type LiveBreakFields_price {
+  create: LiveBreakFields_price_Create
+  read: LiveBreakFields_price_Read
+  update: LiveBreakFields_price_Update
+  delete: LiveBreakFields_price_Delete
+}
+
+type LiveBreakFields_price_Create {
+  permission: Boolean!
+}
+
+type LiveBreakFields_price_Read {
+  permission: Boolean!
+}
+
+type LiveBreakFields_price_Update {
+  permission: Boolean!
+}
+
+type LiveBreakFields_price_Delete {
+  permission: Boolean!
+}
+
+type LiveBreakFields_leagueTeam {
+  create: LiveBreakFields_leagueTeam_Create
+  read: LiveBreakFields_leagueTeam_Read
+  update: LiveBreakFields_leagueTeam_Update
+  delete: LiveBreakFields_leagueTeam_Delete
+}
+
+type LiveBreakFields_leagueTeam_Create {
+  permission: Boolean!
+}
+
+type LiveBreakFields_leagueTeam_Read {
+  permission: Boolean!
+}
+
+type LiveBreakFields_leagueTeam_Update {
+  permission: Boolean!
+}
+
+type LiveBreakFields_leagueTeam_Delete {
+  permission: Boolean!
+}
+
+type LiveBreakFields_seller {
+  create: LiveBreakFields_seller_Create
+  read: LiveBreakFields_seller_Read
+  update: LiveBreakFields_seller_Update
+  delete: LiveBreakFields_seller_Delete
+}
+
+type LiveBreakFields_seller_Create {
+  permission: Boolean!
+}
+
+type LiveBreakFields_seller_Read {
+  permission: Boolean!
+}
+
+type LiveBreakFields_seller_Update {
+  permission: Boolean!
+}
+
+type LiveBreakFields_seller_Delete {
+  permission: Boolean!
+}
+
+type LiveBreakFields_brand {
+  create: LiveBreakFields_brand_Create
+  read: LiveBreakFields_brand_Read
+  update: LiveBreakFields_brand_Update
+  delete: LiveBreakFields_brand_Delete
+}
+
+type LiveBreakFields_brand_Create {
+  permission: Boolean!
+}
+
+type LiveBreakFields_brand_Read {
+  permission: Boolean!
+}
+
+type LiveBreakFields_brand_Update {
+  permission: Boolean!
+}
+
+type LiveBreakFields_brand_Delete {
+  permission: Boolean!
+}
+
+type LiveBreakCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LiveBreakReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LiveBreakUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type LiveBreakDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaAccess {
+  fields: MediaFields
+  create: MediaCreateAccess
+  read: MediaReadAccess
+  update: MediaUpdateAccess
+  delete: MediaDeleteAccess
+}
+
+type MediaFields {
+  url: MediaFields_url
+  filename: MediaFields_filename
+  mimeType: MediaFields_mimeType
+  filesize: MediaFields_filesize
+  alt: MediaFields_alt
+}
+
+type MediaFields_url {
+  create: MediaFields_url_Create
+  read: MediaFields_url_Read
+  update: MediaFields_url_Update
+  delete: MediaFields_url_Delete
+}
+
+type MediaFields_url_Create {
+  permission: Boolean!
+}
+
+type MediaFields_url_Read {
+  permission: Boolean!
+}
+
+type MediaFields_url_Update {
+  permission: Boolean!
+}
+
+type MediaFields_url_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_filename {
+  create: MediaFields_filename_Create
+  read: MediaFields_filename_Read
+  update: MediaFields_filename_Update
+  delete: MediaFields_filename_Delete
+}
+
+type MediaFields_filename_Create {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Read {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Update {
+  permission: Boolean!
+}
+
+type MediaFields_filename_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType {
+  create: MediaFields_mimeType_Create
+  read: MediaFields_mimeType_Read
+  update: MediaFields_mimeType_Update
+  delete: MediaFields_mimeType_Delete
+}
+
+type MediaFields_mimeType_Create {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Read {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Update {
+  permission: Boolean!
+}
+
+type MediaFields_mimeType_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_filesize {
+  create: MediaFields_filesize_Create
+  read: MediaFields_filesize_Read
+  update: MediaFields_filesize_Update
+  delete: MediaFields_filesize_Delete
+}
+
+type MediaFields_filesize_Create {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Read {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Update {
+  permission: Boolean!
+}
+
+type MediaFields_filesize_Delete {
+  permission: Boolean!
+}
+
+type MediaFields_alt {
+  create: MediaFields_alt_Create
+  read: MediaFields_alt_Read
+  update: MediaFields_alt_Update
+  delete: MediaFields_alt_Delete
+}
+
+type MediaFields_alt_Create {
+  permission: Boolean!
+}
+
+type MediaFields_alt_Read {
+  permission: Boolean!
+}
+
+type MediaFields_alt_Update {
+  permission: Boolean!
+}
+
+type MediaFields_alt_Delete {
+  permission: Boolean!
+}
+
+type MediaCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MediaDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Mutation {
+  createUser(data: mutationUserInput!, draft: Boolean): User
+  updateUser(id: String!, data: mutationUserUpdateInput!, draft: Boolean, autosave: Boolean): User
+  deleteUser(id: String!): User
+  refreshTokenUser(token: String): userRefreshedUser
+  logoutUser: String
+  unlockUser(email: String!): Boolean!
+  loginUser(email: String, password: String): userLoginResult
+  forgotPasswordUser(email: String!, disableEmail: Boolean, expiration: Int): Boolean!
+  resetPasswordUser(token: String, password: String): userResetPassword
+  verifyEmailUser(token: String): Boolean
+  createcard(data: mutationcardInput!, draft: Boolean): card
+  updatecard(id: String!, data: mutationcardUpdateInput!, draft: Boolean, autosave: Boolean): card
+  deletecard(id: String!): card
+  createFavouriteProduct(data: mutationFavouriteProductInput!, draft: Boolean): FavouriteProduct
+  updateFavouriteProduct(id: String!, data: mutationFavouriteProductUpdateInput!, draft: Boolean, autosave: Boolean): FavouriteProduct
+  deleteFavouriteProduct(id: String!): FavouriteProduct
+  createBidding(data: mutationBiddingInput!, draft: Boolean): Bidding
+  updateBidding(id: String!, data: mutationBiddingUpdateInput!, draft: Boolean, autosave: Boolean): Bidding
+  deleteBidding(id: String!): Bidding
+  createLiveBreak(data: mutationLiveBreakInput!, draft: Boolean): LiveBreak
+  updateLiveBreak(id: String!, data: mutationLiveBreakUpdateInput!, draft: Boolean, autosave: Boolean): LiveBreak
+  deleteLiveBreak(id: String!): LiveBreak
+  createMedia(data: mutationMediaInput!, draft: Boolean): Media
+  updateMedia(id: String!, data: mutationMediaUpdateInput!, draft: Boolean, autosave: Boolean): Media
+  deleteMedia(id: String!): Media
+  updatePreference(key: String!, value: JSON): Preference
+  deletePreference(key: String!): Preference
+}
+
+input mutationUserInput {
+  email: String
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  loginAttempts: Float
+  lockUntil: String
+  fullName: String!
+  password: String!
+}
+
+input mutationUserUpdateInput {
+  email: String
+  resetPasswordToken: String
+  resetPasswordExpiration: String
+  loginAttempts: Float
+  lockUntil: String
+  fullName: String
+  password: String
+}
+
+type userRefreshedUser {
+  user: userJWT
+  refreshedToken: String
+  exp: Int
+}
+
+type userJWT {
+  email: EmailAddress!
+  collection: String!
+}
+
+type userLoginResult {
+  token: String
+  user: User
+  exp: Int
+}
+
+type userResetPassword {
+  token: String
+  user: User
+}
+
+input mutationcardInput {
+  image: String!
+  playerName: String!
+  type: card_type_MutationInput
+  sportType: String!
+  year: String!
+  price: Float!
+  leagueTeam: card_leagueTeam_MutationInput!
+  seller: String
+  specialFeature: String!
+  brand: String!
+  gradeBy: String!
+  rating: Float!
+}
+
+enum card_type_MutationInput {
+  Singlecards
+  Boxes
+}
+
+enum card_leagueTeam_MutationInput {
+  NBA
+  NFL
+  MLB
+  NHL
+  Randomteam
+}
+
+input mutationcardUpdateInput {
+  image: String
+  playerName: String
+  type: cardUpdate_type_MutationInput
+  sportType: String
+  year: String
+  price: Float
+  leagueTeam: cardUpdate_leagueTeam_MutationInput
+  seller: String
+  specialFeature: String
+  brand: String
+  gradeBy: String
+  rating: Float
+}
+
+enum cardUpdate_type_MutationInput {
+  Singlecards
+  Boxes
+}
+
+enum cardUpdate_leagueTeam_MutationInput {
+  NBA
+  NFL
+  MLB
+  NHL
+  Randomteam
+}
+
+input mutationFavouriteProductInput {
+  user: String
+  card: String
+}
+
+input mutationFavouriteProductUpdateInput {
+  user: String
+  card: String
+}
+
+input mutationBiddingInput {
+  card: String
+  user: String
+  price: Float!
+}
+
+input mutationBiddingUpdateInput {
+  card: String
+  user: String
+  price: Float
+}
+
+input mutationLiveBreakInput {
+  image: String!
+  name: String!
+  sportType: String!
+  year: String!
+  price: Float!
+  leagueTeam: LiveBreak_leagueTeam_MutationInput
+  seller: String
+  brand: String!
+}
+
+enum LiveBreak_leagueTeam_MutationInput {
+  NBA
+  NFL
+  MLB
+  NHL
+  Randomteam
+}
+
+input mutationLiveBreakUpdateInput {
+  image: String
+  name: String
+  sportType: String
+  year: String
+  price: Float
+  leagueTeam: LiveBreakUpdate_leagueTeam_MutationInput
+  seller: String
+  brand: String
+}
+
+enum LiveBreakUpdate_leagueTeam_MutationInput {
+  NBA
+  NFL
+  MLB
+  NHL
+  Randomteam
+}
+
+input mutationMediaInput {
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  alt: String
+}
+
+input mutationMediaUpdateInput {
+  url: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  alt: String
+}

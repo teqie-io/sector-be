@@ -1,0 +1,11 @@
+services:
+  web:
+    build: .
+    volumes:
+      - ./uploads:/usr/src/app/dist/media
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb+srv://admin:4Bs4Hk7nH9zSCWUk@cluster0.f4zxm.mongodb.net/sector-be
+      - PAYLOAD_SECRET=teqie-io
+      - SERVER_URL=https://sector-cms.herokuapp.com
