@@ -5,7 +5,6 @@ WORKDIR /usr/src/app
 COPY ./src ./src
 COPY ./package*.json .
 COPY ./tsconfig*.json .
-COPY ./.env .
 
 RUN yarn install -y 
 RUN yarn build  && yarn cache clean
