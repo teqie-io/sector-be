@@ -3,8 +3,6 @@ import path from 'path';
 
 import {User, Card, FavouriteProduct, Bidding, LiveBreak} from './collections';
 
-const serverURL = process.env.SERVER_URL
-
 export default buildConfig({
   admin: {
     user: User.slug,
