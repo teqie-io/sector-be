@@ -1,21 +1,25 @@
 import express from 'express';
 import payload from 'payload';
 
-const passport = require("passport");
+import passport from "passport";
 import {generateAccessToken} from './token';
-
-require('./authentication/jwt');
-require('./authentication/google');
-require('./authentication/facebook');
+import { passportFacebookStrategy, passportGoogleStrategy } from "./authentication";
 
 require('dotenv').config();
 const app = express();
+const bodyParser = require('body-parser');
+
+passport.use(passportFacebookStrategy);
+passport.use(passportGoogleStrategy);
 
 app.use(passport.initialize());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 function generateUserToken(req, res) {
-    const accessToken = generateAccessToken(req.user.id);
-    res.send(accessToken);
+    const accessToken = generateAccessToken(req.user);
+    console.log(accessToken);
+    res.cookie('access-token', accessToken).redirect(`${process.env.FRONTEND_URL}`);
 }
 
 app.get('/api/authentication/google/start',
@@ -29,16 +33,6 @@ app.get('/api/authentication/facebook/start',
 app.get('/api/authentication/facebook/redirect',
     passport.authenticate('facebook', { session: false }),
     generateUserToken);
-
-app.get('/api/insecure', (req, res) => {
-    res.send('Insecure response');
-});
-
-app.get('/api/secure',
-    passport.authenticate(['jwt'], { session: false }),
-    (req, res) => {
-        res.send('Secure response from ' + JSON.stringify(req));
-    });
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {

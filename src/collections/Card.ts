@@ -7,7 +7,7 @@ const Card: CollectionConfig = {
     defaultColumns: ['year', 'brand', 'playerName']
   },
   access: {
-    read: () => true,
+    read: () => true
   },
   fields: [
     {
