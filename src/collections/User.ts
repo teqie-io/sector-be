@@ -1,21 +1,22 @@
 import { CollectionConfig } from 'payload/types';
-
-const passport = require('passport');
+import {passportFacebookStrategy, passportGoogleStrategy, passportJwtStrategy} from "../authentication";
+import payload from "payload";
 
 const User: CollectionConfig = {
   slug: 'user',
   auth: true,
   admin: {
-    useAsTitle: 'email',
-  },
-  access: {
-    read: () => true,
+    useAsTitle: 'displayName',
+    defaultColumns: ['displayName', 'fullName', 'role']
   },
   fields: [
     {
-      name: 'fullName',
+      name: 'displayName',
       type: 'text',
-      required: true
+    },
+    {
+      name: 'fullName',
+      type: 'text'
     },
     {
       name: 'role',
@@ -26,41 +27,15 @@ const User: CollectionConfig = {
       ],
       required: true,
       defaultValue: 'user',
-    }
-  ],
-  endpoints: [
-    {
-      path: '/login',
-      method: 'get',
-      handler: async(req, res, next) => {
-        // const loginType = req.body.loginType;
-        // const auth = passport.authenticate(loginType, {
-        //   scope: ['email'],
-        //   state: req.query.role
-        // });
-        res.status(200).send("demo");
-      }
     },
-    // {
-    //   path: 'signup',
-    //   method: 'post',
-    //   handler: async(req, res, next) => {
-    //   }
-    // },
-    // {
-    //   path: 'facebook/callback',
-    //   method: 'get',
-    //   handler: async(req, res, next) => {
-    //
-    //   }
-    // },
-    // {
-    //   path: 'google/callback',
-    //   method: 'get',
-    //   handler: async(req, res, next) => {
-    //
-    //   }
-    // },
+    {
+      name: 'googleId',
+      type: 'text'
+    },
+    {
+      name: 'facebookId',
+      type: 'text'
+    }
   ]
 };
 

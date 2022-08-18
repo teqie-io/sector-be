@@ -1,8 +1,38 @@
 import express from 'express';
 import payload from 'payload';
 
+import passport from "passport";
+import {generateAccessToken} from './token';
+import { passportFacebookStrategy, passportGoogleStrategy } from "./authentication";
+
 require('dotenv').config();
 const app = express();
+const bodyParser = require('body-parser');
+
+passport.use(passportFacebookStrategy);
+passport.use(passportGoogleStrategy);
+
+app.use(passport.initialize());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+function generateUserToken(req, res) {
+    const accessToken = generateAccessToken(req.user);
+    console.log(accessToken);
+    res.cookie('access-token', accessToken).redirect(`${process.env.FRONTEND_URL}`);
+}
+
+app.get('/api/authentication/google/start',
+    passport.authenticate('google', { session: false, scope: ['openid', 'profile', 'email'] }));
+app.get('/api/authentication/google/redirect',
+    passport.authenticate('google', { session: false }),
+    generateUserToken);
+
+app.get('/api/authentication/facebook/start',
+    passport.authenticate('facebook', { session: false }));
+app.get('/api/authentication/facebook/redirect',
+    passport.authenticate('facebook', { session: false }),
+    generateUserToken);
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {
