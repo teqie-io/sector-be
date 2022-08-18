@@ -1,6 +1,4 @@
 import { CollectionConfig } from 'payload/types';
-import {passportFacebookStrategy, passportGoogleStrategy, passportJwtStrategy} from "../authentication";
-import payload from "payload";
 
 const User: CollectionConfig = {
   slug: 'user',
