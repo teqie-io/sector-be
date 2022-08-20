@@ -7,6 +7,9 @@ const User: CollectionConfig = {
     useAsTitle: 'displayName',
     defaultColumns: ['displayName', 'fullName', 'role']
   },
+  access: {
+    create: () => true
+  },
   fields: [
     {
       name: 'displayName',
@@ -24,7 +27,7 @@ const User: CollectionConfig = {
         { label: 'User', value: 'user' },
       ],
       required: true,
-      defaultValue: 'user',
+      defaultValue: 'user'
     },
     {
       name: 'googleId',

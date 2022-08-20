@@ -26,6 +26,7 @@ const Card: CollectionConfig = {
       name: 'type',
       type: 'select',
       options: ['Single cards', 'Boxes'],
+      required: true,
       defaultValue: 'Single cards',
       index: true
     },

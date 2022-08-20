@@ -18,8 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 function generateUserToken(req, res) {
     const accessToken = generateAccessToken(req.user);
-    console.log(accessToken);
-    res.cookie('access-token', accessToken).redirect(`${process.env.FRONTEND_URL}`);
+    res.cookie('access-token', accessToken);
+    res.redirect(`${process.env.FRONTEND_URL}`);
 }
 
 app.get('/api/authentication/google/start',
