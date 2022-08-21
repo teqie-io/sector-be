@@ -1,9 +1,9 @@
 import express from 'express';
 import payload from 'payload';
 
-import passport from "passport";
-import {generateAccessToken} from './token';
-import { passportFacebookStrategy, passportGoogleStrategy } from "./authentication";
+import passport from 'passport';
+import { generateAccessToken } from './token';
+import { passportFacebookStrategy, passportGoogleStrategy } from './authentication';
 
 require('dotenv').config();
 const app = express();
@@ -18,36 +18,36 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 function generateUserToken(req, res) {
     const accessToken = generateAccessToken(req.user);
-    res.cookie('access-token', accessToken);
-    res.redirect(`${process.env.FRONTEND_URL}`);
+    res.redirect(`${process.env.FRONTEND_URL}?access-token=${accessToken}`);
 }
 
-app.get('/api/authentication/google/start',
-    passport.authenticate('google', { session: false, scope: ['openid', 'profile', 'email'] }));
-app.get('/api/authentication/google/redirect',
-    passport.authenticate('google', { session: false }),
-    generateUserToken);
+app.get(
+    '/api/authentication/google/start',
+    passport.authenticate('google', { session: false, scope: ['openid', 'profile', 'email'] })
+);
+app.get('/api/authentication/google/redirect', passport.authenticate('google', { session: false }), generateUserToken);
 
-app.get('/api/authentication/facebook/start',
-    passport.authenticate('facebook', { session: false }));
-app.get('/api/authentication/facebook/redirect',
+app.get('/api/authentication/facebook/start', passport.authenticate('facebook', { session: false }));
+app.get(
+    '/api/authentication/facebook/redirect',
     passport.authenticate('facebook', { session: false }),
-    generateUserToken);
+    generateUserToken
+);
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {
-  res.redirect('/admin');
+    res.redirect('/admin');
 });
 
 // Initialize Payload
 payload.init({
-  secret: process.env.PAYLOAD_SECRET,
-  mongoURL: process.env.MONGODB_URI,
-  express: app,
-  onInit: () => {
-    payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
-    payload.logger.info(`Payload API URL: ${payload.getAPIURL()}`)
-  },
-})
+    secret: process.env.PAYLOAD_SECRET,
+    mongoURL: process.env.MONGODB_URI,
+    express: app,
+    onInit: () => {
+        payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
+        payload.logger.info(`Payload API URL: ${payload.getAPIURL()}`);
+    }
+});
 
 app.listen(process.env.PORT || 3000);
