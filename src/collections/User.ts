@@ -8,7 +8,8 @@ const User: CollectionConfig = {
         defaultColumns: ['displayName', 'fullName', 'role']
     },
     access: {
-        create: () => true
+        create: () => true,
+        read: () => true
     },
     fields: [
         {

@@ -31,6 +31,14 @@ const Card: CollectionConfig = {
             index: true
         },
         {
+            name: 'marketType',
+            type: 'select',
+            options: ['Shop', 'Marketplace'],
+            required: true,
+            defaultValue: 'Shop',
+            index: true
+        },
+        {
             name: 'sportType',
             type: 'text',
             index: true,
@@ -86,6 +94,12 @@ const Card: CollectionConfig = {
             min: 0,
             max: 10,
             index: true,
+            required: true
+        },
+        {
+            name: 'published',
+            type: 'checkbox',
+            defaultValue: false,
             required: true
         }
     ]
