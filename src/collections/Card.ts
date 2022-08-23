@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload/types';
+import { isAdmin, isAdminOrCreatedBy } from "../permissions";
 
 const Card: CollectionConfig = {
     slug: 'card',
@@ -7,7 +8,9 @@ const Card: CollectionConfig = {
         defaultColumns: ['year', 'brand', 'playerName']
     },
     access: {
-        read: () => true
+        read: () => true,
+        update: isAdminOrCreatedBy,
+        delete: isAdminOrCreatedBy,
     },
     fields: [
         {
@@ -99,10 +102,39 @@ const Card: CollectionConfig = {
         {
             name: 'published',
             type: 'checkbox',
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
             defaultValue: false,
             required: true
-        }
-    ]
+        },
+        {
+            name: 'createdBy',
+            type: 'relationship',
+            relationTo: 'user',
+            access: {
+                update: () => false,
+            },
+            admin: {
+                readOnly: true,
+                position: 'sidebar',
+                condition: data => Boolean(data?.createdBy)
+            },
+        },
+    ],
+    hooks: {
+        beforeChange: [
+            ({req, operation, data}) => {
+                if (operation === 'create') {
+                    if (req.user) {
+                        data.createdBy = req.user.id;
+                        return data;
+                    }
+                }
+            },
+        ],
+    }
 };
 
 export default Card;

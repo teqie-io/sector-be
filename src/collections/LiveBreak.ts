@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload/types';
+import {isAdmin, isAdminOrCreatedBy} from "../permissions";
 
 const LiveBreak: CollectionConfig = {
     slug: 'liveBreak',
@@ -6,7 +7,9 @@ const LiveBreak: CollectionConfig = {
         useAsTitle: 'name'
     },
     access: {
-        read: () => true
+        read: () => true,
+        update: isAdminOrCreatedBy,
+        delete: isAdminOrCreatedBy,
     },
     fields: [
         {
@@ -59,8 +62,43 @@ const LiveBreak: CollectionConfig = {
             type: 'text',
             index: true,
             required: true
-        }
-    ]
+        },
+        {
+            name: 'published',
+            type: 'checkbox',
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            defaultValue: false,
+            required: true
+        },
+        {
+            name: 'createdBy',
+            type: 'relationship',
+            relationTo: 'user',
+            access: {
+                update: () => false,
+            },
+            admin: {
+                readOnly: true,
+                position: 'sidebar',
+                condition: data => Boolean(data?.createdBy)
+            },
+        },
+    ],
+    hooks: {
+        beforeChange: [
+            ({req, operation, data}) => {
+                if (operation === 'create') {
+                    if (req.user) {
+                        data.createdBy = req.user.id;
+                        return data;
+                    }
+                }
+            },
+        ],
+    }
 };
 
 export default LiveBreak;
