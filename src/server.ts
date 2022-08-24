@@ -34,6 +34,11 @@ app.get(
     generateUserToken
 );
 
+// Payment
+app.post('/api/payment', (req, res) => {
+    console.log(req);
+});
+
 // Redirect root to Admin panel
 app.get('/', (_, res) => {
     res.redirect('/admin');

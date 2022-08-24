@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import {isAdmin, isAdminOrCreatedBy} from "../permissions";
+import { isAdmin, isAdminOrCreatedBy } from "../permissions";
 
 const LiveBreak: CollectionConfig = {
     slug: 'liveBreak',
@@ -89,7 +89,7 @@ const LiveBreak: CollectionConfig = {
     ],
     hooks: {
         beforeChange: [
-            ({req, operation, data}) => {
+            ({ req, operation, data }) => {
                 if (operation === 'create') {
                     if (req.user) {
                         data.createdBy = req.user.id;

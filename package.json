@@ -16,11 +16,13 @@
         "generate:graphQLSchema": "PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema"
     },
     "dependencies": {
+        "@stripe/stripe-js": "^1.35.0",
         "convict": "^6.2.3",
         "create-payload-app": "^0.3.12",
         "cross-env": "^7.0.3",
         "dotenv": "^8.6.0",
         "express": "^4.17.1",
+        "next": "^12.2.5",
         "passport": "^0.6.0",
         "passport-facebook": "^3.0.0",
         "passport-google-oauth": "^2.0.0",
@@ -28,6 +30,7 @@
         "payload": "^1.0.11",
         "stream": "^0.0.2",
         "stream-browserify": "^3.0.0",
+        "stripe": "^10.4.0",
         "url": "^0.11.0",
         "util": "^0.12.4"
     },
