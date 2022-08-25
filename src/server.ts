@@ -8,6 +8,7 @@ import { passportFacebookStrategy, passportGoogleStrategy } from './authenticati
 require('dotenv').config();
 const app = express();
 const bodyParser = require('body-parser');
+const PaymentController = require('./controllers/payment-controller');
 
 passport.use(passportFacebookStrategy);
 passport.use(passportGoogleStrategy);
@@ -35,9 +36,7 @@ app.get(
 );
 
 // Payment
-app.post('/api/payment', (req, res) => {
-    console.log(req);
-});
+app.post('/api/payment', PaymentController.payment);
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {
