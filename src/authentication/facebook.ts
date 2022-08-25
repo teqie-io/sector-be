@@ -13,8 +13,11 @@ const passportConfig = {
 const passportFacebookStrategy = new passportFacebook.Strategy(
     passportConfig,
     async (accessToken, refreshToken, profile, done) => {
-        const { name: { givenName, familyName }, id } = profile;
-        console.log(profile);
+        const {
+            name: { givenName, familyName },
+            id
+        } = profile;
+
         let user = (
             await payload.find({
                 collection: 'user',

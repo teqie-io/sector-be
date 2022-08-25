@@ -13,9 +13,12 @@ const passportConfig = {
 const passportGoogleStrategy = new passportGoogle.OAuth2Strategy(
     passportConfig,
     async (request, accessToken, refreshToken, profile, done) => {
-        const { emails, name: { familyName, givenName }, id } = profile;
+        const {
+            emails,
+            name: { familyName, givenName },
+            id
+        } = profile;
         const email = emails.filter(({ verified }) => verified)[0].value;
-        console.log(profile);
 
         let user = (
             await payload.find({

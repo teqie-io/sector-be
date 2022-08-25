@@ -6,8 +6,8 @@ export const isAdminOrCreatedBy = ({ req: { user } }) => {
     if (user) {
         return {
             createdBy: {
-                equals: user.id,
-            },
+                equals: user.id
+            }
         };
     }
 
@@ -16,4 +16,4 @@ export const isAdminOrCreatedBy = ({ req: { user } }) => {
 
 export const isAdmin = ({ req: { user } }) => {
     return user && user.role === 'admin';
-}
+};
