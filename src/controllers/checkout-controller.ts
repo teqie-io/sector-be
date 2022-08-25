@@ -1,13 +1,14 @@
 import payload from 'payload';
+import express from "express";
 require('dotenv').config();
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const payment = async (req, res, next) => {
-    const { payment } : any = req.body;
+const checkout = async (req: express.Request, res: express.Response, next) => {
+    const checkout = req.body;
     let line_items = [];
-    for(let i = 0; i < payment.products.length; i++) {
-        const p = payment.products[i];
+    for(let i = 0; i < checkout.products.length; i++) {
+        const p = checkout.products[i];
         line_items.push(
             {
                 price_data: {
@@ -28,15 +29,16 @@ const payment = async (req, res, next) => {
                 payment_method_types: ['card'],
                 line_items,
                 mode: 'payment',
-                success_url: '',
-                cancel_url: ''
+                success_url: 'http://localhost:3001/checkout-result?status=success',
+                cancel_url: 'http://localhost:3001/checkout-result?status=cancel'
             }
         );
+        console.log(session);
     } catch (ex) {
-        payload.logger.console.error(ex);
+        payload.logger.error(ex);
     }
 }
 
 module.exports = {
-    payment
+    checkout
 };
