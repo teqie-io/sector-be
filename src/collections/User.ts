@@ -4,8 +4,8 @@ const User: CollectionConfig = {
     slug: 'user',
     auth: true,
     admin: {
-        useAsTitle: 'displayName',
-        defaultColumns: ['displayName', 'fullName', 'role']
+        useAsTitle: 'email',
+        defaultColumns: ['firstName', 'lastName', 'email', 'role']
     },
     access: {
         create: () => true,
@@ -13,11 +13,11 @@ const User: CollectionConfig = {
     },
     fields: [
         {
-            name: 'displayName',
+            name: 'firstName',
             type: 'text'
         },
         {
-            name: 'fullName',
+            name: 'lastName',
             type: 'text'
         },
         {

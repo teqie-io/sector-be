@@ -13,8 +13,8 @@ const passportConfig = {
 const passportFacebookStrategy = new passportFacebook.Strategy(
     passportConfig,
     async (accessToken, refreshToken, profile, done) => {
-        const { displayName, name, id } = profile;
-        console.log(displayName, name, id);
+        const { name: { givenName, familyName }, id } = profile;
+        console.log(profile);
         let user = (
             await payload.find({
                 collection: 'user',
@@ -30,12 +30,9 @@ const passportFacebookStrategy = new passportFacebook.Strategy(
             user = await payload.create({
                 collection: 'user',
                 data: {
-                    displayName,
+                    firstName: givenName,
+                    lastName: familyName,
                     email: `${id}@fb.com`,
-                    fullName:
-                        name.familyName && name.givenName
-                            ? `${name.familyName} ${name.middleName ? name.middleName + ' ' : ''}${name.givenName}`
-                            : undefined,
                     facebookId: id,
                     password: 'later-fix'
                 }
