@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import { isAdmin, isAdminOrCreatedBy } from "../permissions";
+import { isAdmin, isAdminOrCreatedBy } from '../permissions';
 
 const LiveBreak: CollectionConfig = {
     slug: 'liveBreak',
@@ -9,7 +9,7 @@ const LiveBreak: CollectionConfig = {
     access: {
         read: () => true,
         update: isAdminOrCreatedBy,
-        delete: isAdminOrCreatedBy,
+        delete: isAdminOrCreatedBy
     },
     fields: [
         {
@@ -78,14 +78,14 @@ const LiveBreak: CollectionConfig = {
             type: 'relationship',
             relationTo: 'user',
             access: {
-                update: () => false,
+                update: () => false
             },
             admin: {
                 readOnly: true,
                 position: 'sidebar',
-                condition: data => Boolean(data?.createdBy)
-            },
-        },
+                condition: (data) => Boolean(data?.createdBy)
+            }
+        }
     ],
     hooks: {
         beforeChange: [
@@ -96,8 +96,8 @@ const LiveBreak: CollectionConfig = {
                         return data;
                     }
                 }
-            },
-        ],
+            }
+        ]
     }
 };
 

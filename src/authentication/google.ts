@@ -13,7 +13,11 @@ const passportConfig = {
 const passportGoogleStrategy = new passportGoogle.OAuth2Strategy(
     passportConfig,
     async (request, accessToken, refreshToken, profile, done) => {
-        const { displayName, emails, name, id } = profile;
+        const {
+            emails,
+            name: { familyName, givenName },
+            id
+        } = profile;
         const email = emails.filter(({ verified }) => verified)[0].value;
 
         let user = (
@@ -53,9 +57,9 @@ const passportGoogleStrategy = new passportGoogle.OAuth2Strategy(
             user = await payload.create({
                 collection: 'user',
                 data: {
-                    displayName,
                     email,
-                    fullName: name.familyName && name.givenName ? `${name.familyName} ${name.givenName}` : undefined,
+                    firstName: familyName,
+                    lastName: givenName,
                     googleId: id,
                     password: 'later-fix'
                 }
