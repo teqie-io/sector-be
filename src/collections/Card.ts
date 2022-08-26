@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import { isAdmin, isAdminOrCreatedBy } from '../permissions';
+import { isAdmin, isAdminOrSeller } from '../permissions';
 
 const Card: CollectionConfig = {
     slug: 'card',
@@ -9,8 +9,8 @@ const Card: CollectionConfig = {
     },
     access: {
         read: () => true,
-        update: isAdminOrCreatedBy,
-        delete: isAdminOrCreatedBy
+        update: isAdminOrSeller,
+        delete: isAdminOrSeller
     },
     fields: [
         {
@@ -68,12 +68,6 @@ const Card: CollectionConfig = {
             required: true
         },
         {
-            name: 'seller',
-            type: 'relationship',
-            relationTo: 'user',
-            required: true
-        },
-        {
             name: 'specialFeature',
             type: 'text',
             index: true,
@@ -110,16 +104,16 @@ const Card: CollectionConfig = {
             required: true
         },
         {
-            name: 'createdBy',
+            name: 'seller',
             type: 'relationship',
             relationTo: 'user',
             access: {
-                update: () => false
+                read: () => true,
             },
             admin: {
                 readOnly: true,
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.createdBy)
+                condition: (data) => Boolean(data?.seller)
             }
         }
     ],
@@ -128,7 +122,7 @@ const Card: CollectionConfig = {
             ({ req, operation, data }) => {
                 if (operation === 'create') {
                     if (req.user) {
-                        data.createdBy = req.user.id;
+                        data.seller = req.user.id;
                         return data;
                     }
                 }

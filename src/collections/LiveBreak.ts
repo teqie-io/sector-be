@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import { isAdmin, isAdminOrCreatedBy } from '../permissions';
+import { isAdmin, isAdminOrSeller } from '../permissions';
 
 const LiveBreak: CollectionConfig = {
     slug: 'liveBreak',
@@ -8,8 +8,8 @@ const LiveBreak: CollectionConfig = {
     },
     access: {
         read: () => true,
-        update: isAdminOrCreatedBy,
-        delete: isAdminOrCreatedBy
+        update: isAdminOrSeller,
+        delete: isAdminOrSeller
     },
     fields: [
         {
@@ -52,12 +52,6 @@ const LiveBreak: CollectionConfig = {
             index: true
         },
         {
-            name: 'seller',
-            type: 'relationship',
-            relationTo: 'user',
-            required: true
-        },
-        {
             name: 'brand',
             type: 'text',
             index: true,
@@ -74,16 +68,16 @@ const LiveBreak: CollectionConfig = {
             required: true
         },
         {
-            name: 'createdBy',
+            name: 'seller',
             type: 'relationship',
             relationTo: 'user',
             access: {
-                update: () => false
+                read: () => true,
             },
             admin: {
                 readOnly: true,
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.createdBy)
+                condition: (data) => Boolean(data?.seller)
             }
         }
     ],
@@ -92,7 +86,7 @@ const LiveBreak: CollectionConfig = {
             ({ req, operation, data }) => {
                 if (operation === 'create') {
                     if (req.user) {
-                        data.createdBy = req.user.id;
+                        data.seller = req.user.id;
                         return data;
                     }
                 }
