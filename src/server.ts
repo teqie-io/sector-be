@@ -36,7 +36,8 @@ app.get(
 );
 
 // Payment
-app.post('/api/checkout', CheckoutController.checkout);
+app.post('/api/create-payment-intent', CheckoutController.createPaymentIntent);
+// app.post('/api/checkout', CheckoutController.checkout);
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {
