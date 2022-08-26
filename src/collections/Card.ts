@@ -100,15 +100,17 @@ const Card: CollectionConfig = {
                 read: () => true,
                 update: isAdmin
             },
-            defaultValue: false,
-            required: true
+            admin: {
+                position: 'sidebar',
+                condition: (data) => Boolean(data?.seller)
+            }
         },
         {
             name: 'seller',
             type: 'relationship',
             relationTo: 'user',
             access: {
-                read: () => true,
+                read: () => true
             },
             admin: {
                 readOnly: true,
@@ -123,6 +125,7 @@ const Card: CollectionConfig = {
                 if (operation === 'create') {
                     if (req.user) {
                         data.seller = req.user.id;
+                        data.published = false;
                         return data;
                     }
                 }

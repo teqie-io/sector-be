@@ -72,7 +72,7 @@ const LiveBreak: CollectionConfig = {
             type: 'relationship',
             relationTo: 'user',
             access: {
-                read: () => true,
+                read: () => true
             },
             admin: {
                 readOnly: true,
