@@ -1,10 +1,14 @@
 import payload from 'payload';
+<<<<<<< HEAD:src/controllers/checkout-controller.ts
 import express from "express";
 import Stripe from 'stripe';
+=======
+>>>>>>> parent of 4b96486 (Update collection checkout):src/controllers/payment-controller.ts
 require('dotenv').config();
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+<<<<<<< HEAD:src/controllers/checkout-controller.ts
 const createPaymentIntent = async (req: express.Request, res: express.Response, next) => {
     // const checkout = req.body;
     // let line_items = [];
@@ -59,9 +63,46 @@ const createPaymentIntent = async (req: express.Request, res: express.Response, 
                 message: ex.message,
             }
         });
+=======
+const payment = async (req, res, next) => {
+    const { payment } : any = req.body;
+    let line_items = [];
+    for(let i = 0; i < payment.products.length; i++) {
+        const p = payment.products[i];
+        line_items.push(
+            {
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: p.name,
+                        images: [p.image]
+                    },
+                    unit_amount: p.amount
+                },
+                quantity: p.quantity
+            }
+        );
+    }
+    try {
+        const session = await stripe.checkout.sessions.create(
+            {
+                payment_method_types: ['card'],
+                line_items,
+                mode: 'payment',
+                success_url: '',
+                cancel_url: ''
+            }
+        );
+    } catch (ex) {
+        payload.logger.console.error(ex);
+>>>>>>> parent of 4b96486 (Update collection checkout):src/controllers/payment-controller.ts
     }
 }
 
 module.exports = {
+<<<<<<< HEAD:src/controllers/checkout-controller.ts
     createPaymentIntent
+=======
+    payment
+>>>>>>> parent of 4b96486 (Update collection checkout):src/controllers/payment-controller.ts
 };

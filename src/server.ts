@@ -8,7 +8,7 @@ import { passportFacebookStrategy, passportGoogleStrategy } from './authenticati
 require('dotenv').config();
 const app = express();
 const bodyParser = require('body-parser');
-const CheckoutController = require('./controllers/checkout-controller');
+const PaymentController = require('./controllers/payment-controller');
 
 passport.use(passportFacebookStrategy);
 passport.use(passportGoogleStrategy);
@@ -36,8 +36,12 @@ app.get(
 );
 
 // Payment
+<<<<<<< HEAD
 app.post('/api/create-payment-intent', CheckoutController.createPaymentIntent);
 // app.post('/api/checkout', CheckoutController.checkout);
+=======
+app.post('/api/payment', PaymentController.payment);
+>>>>>>> parent of 4b96486 (Update collection checkout)
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {
