@@ -7,6 +7,7 @@ import { passportFacebookStrategy, passportGoogleStrategy } from './authenticati
 
 require('dotenv').config();
 const app = express();
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const CheckoutController = require('./controllers/checkout-controller');
 
@@ -16,6 +17,9 @@ passport.use(passportGoogleStrategy);
 app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+    origin: '*'
+}));
 
 function generateUserToken(req, res) {
     const accessToken = generateAccessToken(req.user);
@@ -36,7 +40,7 @@ app.get(
 );
 
 // Payment
-app.post('/api/create-payment-intent', CheckoutController.createPaymentIntent);
+app.post('/api/checkout/create-payment-intent', CheckoutController.createPaymentIntent);
 // app.post('/api/checkout', CheckoutController.checkout);
 
 // Redirect root to Admin panel

@@ -45,6 +45,8 @@ const createPaymentIntent = async (req: express.Request, res: express.Response, 
             params
         );
 
+        console.log(paymentIntent)
+
 
         // Send publishable key and PaymentIntent client_secret to client.
         res.send({
