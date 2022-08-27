@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import { isAdmin, isAdminOrCreatedBy } from "../permissions";
+import { isAdmin, isAdminOrCreatedBy } from '../permissions';
 
 const Card: CollectionConfig = {
     slug: 'card',
@@ -10,7 +10,7 @@ const Card: CollectionConfig = {
     access: {
         read: () => true,
         update: isAdminOrCreatedBy,
-        delete: isAdminOrCreatedBy,
+        delete: isAdminOrCreatedBy
     },
     fields: [
         {
@@ -114,26 +114,26 @@ const Card: CollectionConfig = {
             type: 'relationship',
             relationTo: 'user',
             access: {
-                update: () => false,
+                update: () => false
             },
             admin: {
                 readOnly: true,
                 position: 'sidebar',
-                condition: data => Boolean(data?.createdBy)
-            },
-        },
+                condition: (data) => Boolean(data?.createdBy)
+            }
+        }
     ],
     hooks: {
         beforeChange: [
-            ({req, operation, data}) => {
+            ({ req, operation, data }) => {
                 if (operation === 'create') {
                     if (req.user) {
                         data.createdBy = req.user.id;
                         return data;
                     }
                 }
-            },
-        ],
+            }
+        ]
     }
 };
 
