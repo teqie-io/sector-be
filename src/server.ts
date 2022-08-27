@@ -17,9 +17,11 @@ passport.use(passportGoogleStrategy);
 app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({
-    origin: '*'
-}));
+app.use(
+    cors({
+        origin: '*'
+    })
+);
 
 function generateUserToken(req, res) {
     const accessToken = generateAccessToken(req.user);
@@ -41,7 +43,7 @@ app.get(
 
 // Payment
 app.post('/api/checkout/create-payment-intent', CheckoutController.createPaymentIntent);
-// app.post('/api/checkout', CheckoutController.checkout);
+app.post('/api/checkout/confirm-payment', CheckoutController.confirmPayment);
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {
