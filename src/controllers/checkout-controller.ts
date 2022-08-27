@@ -1,5 +1,5 @@
 import payload from 'payload';
-import express from "express";
+import express from 'express';
 import Stripe from 'stripe';
 require('dotenv').config();
 
@@ -39,30 +39,27 @@ const createPaymentIntent = async (req: express.Request, res: express.Response, 
         const params: Stripe.PaymentIntentCreateParams = {
             amount: 5999,
             currency: 'usd',
-            payment_method_types: ['card'],
+            payment_method_types: ['card']
         };
-        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create(
-            params
-        );
+        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create(params);
 
-        console.log(paymentIntent)
-
+        console.log(paymentIntent);
 
         // Send publishable key and PaymentIntent client_secret to client.
         res.send({
             clientSecret: paymentIntent.client_secret,
-            nextAction: paymentIntent.next_action,
+            nextAction: paymentIntent.next_action
         });
     } catch (ex) {
         payload.logger.error(ex);
-        
+
         res.status(400).send({
             error: {
-                message: ex.message,
+                message: ex.message
             }
         });
     }
-}
+};
 
 module.exports = {
     createPaymentIntent

@@ -41,6 +41,6 @@ const Checkout: CollectionConfig = {
             type: 'text'
         }
     ]
-}
+};
 
 export default Checkout;

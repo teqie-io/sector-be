@@ -17,9 +17,11 @@ passport.use(passportGoogleStrategy);
 app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({
-    origin: '*'
-}));
+app.use(
+    cors({
+        origin: '*'
+    })
+);
 
 function generateUserToken(req, res) {
     const accessToken = generateAccessToken(req.user);
