@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload/types';
 const Checkout: CollectionConfig = {
     slug: 'checkout',
     admin: {
-        useAsTitle: 'name'
+        useAsTitle: 'transactionId'
     },
     access: {
         read: () => true
@@ -22,9 +22,8 @@ const Checkout: CollectionConfig = {
         },
         {
             name: 'checkoutTime',
-            type: 'date',
-            required: true,
-            defaultValue: new Date()
+            type: 'text',
+            required: true
         },
         {
             name: 'type',
@@ -39,8 +38,48 @@ const Checkout: CollectionConfig = {
         {
             name: 'status',
             type: 'text'
+        },
+        {
+            name: 'firstName',
+            type: 'text',
+            required: true
+        },
+        {
+            name: 'lastName',
+            type: 'text',
+            required: true
+        },
+        {
+            name: 'address',
+            type: 'text',
+            required: true
+        },
+        {
+            name: 'city',
+            type: 'text',
+            required: true
+        },
+        {
+            name: 'state',
+            type: 'text',
+            required: true
+        },
+        {
+            name: 'postCode',
+            type: 'text',
+            required: true
+        },
+        {
+            name: 'email',
+            type: 'text',
+            required: true
+        },
+        {
+            name: 'phoneNumber',
+            type: 'text',
+            required: true
         }
     ]
-}
+};
 
 export default Checkout;
