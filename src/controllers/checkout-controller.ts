@@ -11,15 +11,12 @@ const createPaymentIntent = async (req: express.Request, res: express.Response) 
     const currency = req.body.currency;
     const paymentMethodType = req.body.paymentMethodType;
     try {
-
         const params: Stripe.PaymentIntentCreateParams = {
             amount,
             currency,
-            payment_method_types: [paymentMethodType],
+            payment_method_types: [paymentMethodType]
         };
-        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create(
-            params
-        );
+        const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.create(params);
 
         // Send publishable key and PaymentIntent client_secret to client.
         res.send({
@@ -41,31 +38,29 @@ const confirmPayment = async (req: express.Request, res: express.Response) => {
     const paymentObj = req.body;
     console.log(paymentObj);
     try {
-        const checkoutObj = (await payload.find(
-            {
+        const checkoutObj = (
+            await payload.find({
                 collection: 'checkout',
                 where: {
                     transactionId: {
                         equals: paymentObj.transactionId
                     }
                 }
-            }
-        )).docs[0];
+            })
+        ).docs[0];
         if (!checkoutObj) {
-            await payload.create(
-                {
-                    collection: 'checkout',
-                    data: {
-                        ...paymentObj,
-                        type: 'card',
-                        paymentMethod: 'stripe_card',
-                        checkoutTime: (new Date()).toISOString()
-                    }
+            await payload.create({
+                collection: 'checkout',
+                data: {
+                    ...paymentObj,
+                    type: 'card',
+                    paymentMethod: 'stripe_card',
+                    checkoutTime: new Date().toISOString()
                 }
-            );
+            });
         }
         res.send({
-            status: 'success',
+            status: 'success'
         });
     } catch (ex) {
         payload.logger.error(ex);
@@ -75,7 +70,7 @@ const confirmPayment = async (req: express.Request, res: express.Response) => {
             error: ex.message
         });
     }
-}
+};
 
 module.exports = {
     createPaymentIntent,

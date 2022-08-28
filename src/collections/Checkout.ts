@@ -23,7 +23,7 @@ const Checkout: CollectionConfig = {
         {
             name: 'checkoutTime',
             type: 'text',
-            required: true,
+            required: true
         },
         {
             name: 'type',
@@ -78,7 +78,7 @@ const Checkout: CollectionConfig = {
             name: 'phoneNumber',
             type: 'text',
             required: true
-        },
+        }
     ]
 };
 
