@@ -94,18 +94,6 @@ const Card: CollectionConfig = {
             required: true
         },
         {
-            name: 'published',
-            type: 'checkbox',
-            access: {
-                read: () => true,
-                update: isAdmin
-            },
-            admin: {
-                position: 'sidebar',
-                condition: (data) => Boolean(data?.seller)
-            }
-        },
-        {
             name: 'seller',
             type: 'relationship',
             relationTo: 'user',
@@ -114,6 +102,18 @@ const Card: CollectionConfig = {
             },
             admin: {
                 readOnly: true,
+                position: 'sidebar',
+                condition: (data) => Boolean(data?.seller)
+            }
+        },
+        {
+            name: 'published',
+            type: 'checkbox',
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
                 position: 'sidebar',
                 condition: (data) => Boolean(data?.seller)
             }

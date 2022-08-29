@@ -24,27 +24,43 @@ const User: CollectionConfig = {
             type: 'text'
         },
         {
-            name: 'role',
-            type: 'select',
-            access: {
-                update: isAdmin
-            },
-            options: [
-                { label: 'Admin', value: 'admin' },
-                { label: 'User', value: 'user' }
-            ],
-            required: true,
-            defaultValue: 'user'
-        },
-        {
             name: 'googleId',
             type: 'text'
         },
         {
             name: 'facebookId',
             type: 'text'
+        },
+        {
+            name: 'role',
+            type: 'select',
+            options: [
+                { label: 'Admin', value: 'admin' },
+                { label: 'User', value: 'user' }
+            ],
+            required: true,
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
+                position: 'sidebar',
+                condition: (data) => Boolean(data?.seller)
+            }
         }
-    ]
+    ],
+    hooks: {
+        beforeChange: [
+            ({ req, operation, data }) => {
+                if (operation === 'create') {
+                    if (req.user) {
+                        data.role = 'admin';
+                        return data;
+                    }
+                }
+            }
+        ]
+    }
 };
 
 export default User;

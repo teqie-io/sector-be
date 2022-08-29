@@ -58,16 +58,6 @@ const LiveBreak: CollectionConfig = {
             required: true
         },
         {
-            name: 'published',
-            type: 'checkbox',
-            access: {
-                read: () => true,
-                update: isAdmin
-            },
-            defaultValue: false,
-            required: true
-        },
-        {
             name: 'seller',
             type: 'relationship',
             relationTo: 'user',
@@ -79,6 +69,18 @@ const LiveBreak: CollectionConfig = {
                 position: 'sidebar',
                 condition: (data) => Boolean(data?.seller)
             }
+        },
+        {
+            name: 'published',
+            type: 'checkbox',
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
+                position: 'sidebar',
+                condition: (data) => Boolean(data?.seller)
+            }
         }
     ],
     hooks: {
@@ -87,6 +89,7 @@ const LiveBreak: CollectionConfig = {
                 if (operation === 'create') {
                     if (req.user) {
                         data.seller = req.user.id;
+                        data.published = false;
                         return data;
                     }
                 }
