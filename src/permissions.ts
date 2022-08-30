@@ -1,3 +1,23 @@
+export const isAdminOrSellerOrPublished = ({ req: { user } }) => {
+    if (user && user.role === 'admin') {
+        return true;
+    }
+
+    if (user) {
+        return {
+            seller: {
+                equals: user.id
+            }
+        };
+    }
+
+    return {
+        published: {
+            equals: true
+        }
+    };
+};
+
 export const isAdminOrSeller = ({ req: { user } }) => {
     if (user && user.role === 'admin') {
         return true;

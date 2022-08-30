@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types';
-import { isAdmin, isAdminOrSeller } from '../permissions';
+import {isAdmin, isAdminOrSeller, isAdminOrSellerOrPublished} from '../permissions';
 
 const LiveBreak: CollectionConfig = {
     slug: 'liveBreak',
@@ -7,7 +7,7 @@ const LiveBreak: CollectionConfig = {
         useAsTitle: 'name'
     },
     access: {
-        read: () => true,
+        read: isAdminOrSellerOrPublished,
         update: isAdminOrSeller,
         delete: isAdminOrSeller
     },
@@ -32,7 +32,10 @@ const LiveBreak: CollectionConfig = {
         },
         {
             name: 'year',
-            type: 'date',
+            type: 'number',
+            min: 1900,
+            max: new Date().getFullYear(),
+            defaultValue: new Date().getFullYear(),
             index: true,
             required: true
         },
@@ -45,11 +48,23 @@ const LiveBreak: CollectionConfig = {
         },
         {
             name: 'leagueTeam',
-            type: 'select',
-            options: ['NBA', 'NFL', 'MLB', 'NHL', 'Random team'],
-            required: true,
-            defaultValue: 'Random team',
-            index: true
+            type: 'array',
+            fields: [
+                {
+                    name: 'teams',
+                    type: 'select',
+                    options: [
+                        'Dallas Mavericks', 'Denver Nuggets', 'Golden State Warriors', 'Houston Rockets', 'Los Angeles Clippers',
+                        'Los Angeles Lakers', 'Memphis Grizzlies', 'Minnesota Timberwolves', 'New Orleans Pelicans', 'Oklahoma City Thunder',
+                        'Phoenix Suns', 'Portland Trail Blazers', 'Sacramento Kings', 'San Antonio Spurs', 'Utah Jazz',
+                        'Atlanta Hawks', 'Boston Celtics', 'Brooklyn Nets', 'Charlotte Hornets', 'Chicago Bulls',
+                        'Cleveland Cavaliers', 'Detroit Pistons', 'Indiana Pacers', 'Miami Heat', 'Milwaukee Bucks',
+                        'New York Knicks', 'Orlando Magic', 'Philadelphia 76ers', 'Toronto Raptors', 'Washington Wizards',
+                    ],
+                    required: true
+                }
+            ],
+            required: true
         },
         {
             name: 'brand',
@@ -79,7 +94,7 @@ const LiveBreak: CollectionConfig = {
             },
             admin: {
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.seller)
+                condition: (data) => Boolean(data?.published)
             }
         }
     ],

@@ -54,7 +54,7 @@ const User: CollectionConfig = {
             ({ req, operation, data }) => {
                 if (operation === 'create') {
                     if (req.user) {
-                        data.role = 'admin';
+                        data.role = 'user';
                         return data;
                     }
                 }
