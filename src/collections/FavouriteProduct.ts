@@ -1,7 +1,7 @@
 import { CollectionConfig } from 'payload/types';
 
 const FavouriteProduct: CollectionConfig = {
-    slug: 'favouriteProduct',
+    slug: 'favourite-product',
     fields: [
         {
             name: 'user',

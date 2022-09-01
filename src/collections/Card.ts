@@ -5,7 +5,7 @@ const Card: CollectionConfig = {
     slug: 'card',
     admin: {
         useAsTitle: 'playerName',
-        defaultColumns: ['playerName', 'brand', 'year']
+        defaultColumns: ['playerName', 'brand', 'year', 'seller', 'published']
     },
     access: {
         read: isAdminOrSellerOrPublished,
@@ -141,26 +141,29 @@ const Card: CollectionConfig = {
             type: 'relationship',
             relationTo: 'user',
             access: {
-                read: () => true,
-                update: isAdmin
+                update: () => false
             },
             admin: {
-                readOnly: true,
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.seller)
-            }
+                condition: (data) => Boolean(data?.seller),
+                description: "Email of card's seller"
+            },
+            required: true,
+            index: true,
         },
         {
             name: 'published',
             type: 'checkbox',
             access: {
-                read: () => true,
                 update: isAdmin
             },
             admin: {
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.published)
-            }
+                condition: (data) => Boolean(data?.published),
+                description: "Public card to the website"
+            },
+            required: true,
+            index: true,
         }
     ],
     hooks: {

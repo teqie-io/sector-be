@@ -40,12 +40,12 @@ const User: CollectionConfig = {
             ],
             required: true,
             access: {
-                read: () => true,
                 update: isAdmin
             },
             admin: {
+                description: 'Set user role (default is User).',
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.seller)
+                condition: (data) => Boolean(data?.role)
             }
         }
     ],
@@ -53,10 +53,8 @@ const User: CollectionConfig = {
         beforeChange: [
             ({ req, operation, data }) => {
                 if (operation === 'create') {
-                    if (req.user) {
-                        data.role = 'user';
-                        return data;
-                    }
+                    data.role = 'user';
+                    return data;
                 }
             }
         ]

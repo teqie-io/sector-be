@@ -5,9 +5,18 @@ export const isAdminOrSellerOrPublished = ({ req: { user } }) => {
 
     if (user) {
         return {
-            seller: {
-                equals: user.id
-            }
+            or: [
+                {
+                    seller: {
+                        equals: user.id
+                    }
+                },
+                {
+                    published: {
+                        equals: true
+                    }
+                }
+            ]
         };
     }
 

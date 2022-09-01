@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload/types';
 import { isAdmin } from '../permissions';
 
 const LiveBreak: CollectionConfig = {
-    slug: 'liveBreak',
+    slug: 'live-break',
     admin: {
         useAsTitle: 'name',
         defaultColumns: ['name', 'sportType', 'year']

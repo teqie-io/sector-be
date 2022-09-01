@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload/types';
 import { isAdmin } from '../permissions';
 
 const HotCard: CollectionConfig = {
-    slug: 'hotCard',
+    slug: 'hot-card',
     admin: {
         useAsTitle: 'hotCard'
     },

@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload/types';
 import { isAdmin } from '../permissions';
 
 const HotLiveBreak: CollectionConfig = {
-    slug: 'hotLiveBreak',
+    slug: 'hot-live-break',
     admin: {
         useAsTitle: 'hotLiveBreak'
     },
@@ -16,8 +16,10 @@ const HotLiveBreak: CollectionConfig = {
         {
             name: 'hotLiveBreak',
             type: 'relationship',
-            relationTo: 'card',
-            unique: true
+            relationTo: 'live-break',
+            unique: true,
+            hasMany: false,
+            required: true
         }
     ]
 };

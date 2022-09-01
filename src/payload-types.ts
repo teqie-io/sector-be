@@ -73,8 +73,8 @@ export interface Card {
   brand: string;
   gradeBy: string;
   rating: number;
-  seller?: string | User;
-  published?: boolean;
+  seller: string | User;
+  published: boolean;
   createdAt: string;
   updatedAt: string;
 }
