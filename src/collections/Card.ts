@@ -157,11 +157,6 @@ const Card: CollectionConfig = {
             access: {
                 update: isAdmin
             },
-            admin: {
-                position: 'sidebar',
-                condition: (data) => Boolean(data?.published),
-                description: "Public card to the website"
-            },
             required: true,
             index: true,
         }
