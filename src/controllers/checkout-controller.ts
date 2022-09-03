@@ -7,9 +7,10 @@ require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const createPaymentIntent = async (req: express.Request, res: express.Response) => {
-    const amount = req.body.totalAmount;
+    const totalAmount: number = req.body.totalAmount;
     const currency = req.body.currency;
     const paymentMethodType = req.body.paymentMethodType;
+    const amount: number = Number.parseFloat(totalAmount.toFixed(2)) * 100;
     try {
         const params: Stripe.PaymentIntentCreateParams = {
             amount,
