@@ -1,11 +1,11 @@
 import { CollectionConfig } from 'payload/types';
-import {isAdmin, isAdminOrSeller, isAdminOrSellerOrPublished} from '../permissions';
+import { isAdmin, isAdminOrSeller, isAdminOrSellerOrPublished } from '../permissions';
 
 const Card: CollectionConfig = {
     slug: 'card',
     admin: {
         useAsTitle: 'playerName',
-        defaultColumns: ['year', 'brand', 'playerName']
+        defaultColumns: ['playerName', 'brand', 'year']
     },
     access: {
         read: isAdminOrSellerOrPublished,
@@ -50,15 +50,26 @@ const Card: CollectionConfig = {
         {
             name: 'year',
             type: 'number',
-            max: new Date().getFullYear(),
             defaultValue: new Date().getFullYear(),
+            validate: (value) => {
+                if (Number.isInteger(value)) {
+                    if (value < 1900) {
+                        return `"${value}" is before 1900.`;
+                    }
+                    if (value > new Date().getFullYear()) {
+                        return `"${value}" is after the current year.`;
+                    }
+                    return true;
+                }
+                return `"${value}" is not an integer.`;
+            },
             index: true,
             required: true
         },
         {
             name: 'price',
             type: 'number',
-            min: 0,
+            min: 0.01,
             index: true,
             required: true
         },
@@ -66,12 +77,36 @@ const Card: CollectionConfig = {
             name: 'leagueTeam',
             type: 'select',
             options: [
-                'Dallas Mavericks', 'Denver Nuggets', 'Golden State Warriors', 'Houston Rockets', 'Los Angeles Clippers',
-                'Los Angeles Lakers', 'Memphis Grizzlies', 'Minnesota Timberwolves', 'New Orleans Pelicans', 'Oklahoma City Thunder',
-                'Phoenix Suns', 'Portland Trail Blazers', 'Sacramento Kings', 'San Antonio Spurs', 'Utah Jazz',
-                'Atlanta Hawks', 'Boston Celtics', 'Brooklyn Nets', 'Charlotte Hornets', 'Chicago Bulls',
-                'Cleveland Cavaliers', 'Detroit Pistons', 'Indiana Pacers', 'Miami Heat', 'Milwaukee Bucks',
-                'New York Knicks', 'Orlando Magic', 'Philadelphia 76ers', 'Toronto Raptors', 'Washington Wizards',
+                'Dallas Mavericks',
+                'Denver Nuggets',
+                'Golden State Warriors',
+                'Houston Rockets',
+                'Los Angeles Clippers',
+                'Los Angeles Lakers',
+                'Memphis Grizzlies',
+                'Minnesota Timberwolves',
+                'New Orleans Pelicans',
+                'Oklahoma City Thunder',
+                'Phoenix Suns',
+                'Portland Trail Blazers',
+                'Sacramento Kings',
+                'San Antonio Spurs',
+                'Utah Jazz',
+                'Atlanta Hawks',
+                'Boston Celtics',
+                'Brooklyn Nets',
+                'Charlotte Hornets',
+                'Chicago Bulls',
+                'Cleveland Cavaliers',
+                'Detroit Pistons',
+                'Indiana Pacers',
+                'Miami Heat',
+                'Milwaukee Bucks',
+                'New York Knicks',
+                'Orlando Magic',
+                'Philadelphia 76ers',
+                'Toronto Raptors',
+                'Washington Wizards'
             ],
             required: true
         },
@@ -96,7 +131,7 @@ const Card: CollectionConfig = {
         {
             name: 'rating',
             type: 'number',
-            min: 0,
+            min: 1,
             max: 10,
             index: true,
             required: true
@@ -106,7 +141,8 @@ const Card: CollectionConfig = {
             type: 'relationship',
             relationTo: 'user',
             access: {
-                read: () => true
+                read: () => true,
+                update: isAdmin
             },
             admin: {
                 readOnly: true,
@@ -125,7 +161,7 @@ const Card: CollectionConfig = {
                 position: 'sidebar',
                 condition: (data) => Boolean(data?.published)
             }
-        },
+        }
     ],
     hooks: {
         beforeChange: [

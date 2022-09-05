@@ -37,7 +37,6 @@ const createPaymentIntent = async (req: express.Request, res: express.Response) 
 
 const confirmPayment = async (req: express.Request, res: express.Response) => {
     const paymentObj = req.body;
-    console.log(paymentObj);
     try {
         const checkoutObj = (
             await payload.find({

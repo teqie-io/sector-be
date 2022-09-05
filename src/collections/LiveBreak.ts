@@ -1,15 +1,17 @@
 import { CollectionConfig } from 'payload/types';
-import {isAdmin, isAdminOrSeller, isAdminOrSellerOrPublished} from '../permissions';
+import { isAdmin } from '../permissions';
 
 const LiveBreak: CollectionConfig = {
     slug: 'liveBreak',
     admin: {
-        useAsTitle: 'name'
+        useAsTitle: 'name',
+        defaultColumns: ['name', 'sportType', 'year']
     },
     access: {
-        read: isAdminOrSellerOrPublished,
-        update: isAdminOrSeller,
-        delete: isAdminOrSeller
+        read: () => true,
+        create: isAdmin,
+        update: isAdmin,
+        delete: isAdmin
     },
     fields: [
         {
@@ -33,37 +35,20 @@ const LiveBreak: CollectionConfig = {
         {
             name: 'year',
             type: 'number',
-            min: 1900,
-            max: new Date().getFullYear(),
             defaultValue: new Date().getFullYear(),
-            index: true,
-            required: true
-        },
-        {
-            name: 'price',
-            type: 'number',
-            min: 0,
-            index: true,
-            required: true
-        },
-        {
-            name: 'leagueTeam',
-            type: 'array',
-            fields: [
-                {
-                    name: 'teams',
-                    type: 'select',
-                    options: [
-                        'Dallas Mavericks', 'Denver Nuggets', 'Golden State Warriors', 'Houston Rockets', 'Los Angeles Clippers',
-                        'Los Angeles Lakers', 'Memphis Grizzlies', 'Minnesota Timberwolves', 'New Orleans Pelicans', 'Oklahoma City Thunder',
-                        'Phoenix Suns', 'Portland Trail Blazers', 'Sacramento Kings', 'San Antonio Spurs', 'Utah Jazz',
-                        'Atlanta Hawks', 'Boston Celtics', 'Brooklyn Nets', 'Charlotte Hornets', 'Chicago Bulls',
-                        'Cleveland Cavaliers', 'Detroit Pistons', 'Indiana Pacers', 'Miami Heat', 'Milwaukee Bucks',
-                        'New York Knicks', 'Orlando Magic', 'Philadelphia 76ers', 'Toronto Raptors', 'Washington Wizards',
-                    ],
-                    required: true
+            validate: (value) => {
+                if (Number.isInteger(value)) {
+                    if (value < 1900) {
+                        return `"${value}" is before 1900.`;
+                    }
+                    if (value > new Date().getFullYear()) {
+                        return `"${value}" is after the current year.`;
+                    }
+                    return true;
                 }
-            ],
+                return `"${value}" is not an integer.`;
+            },
+            index: true,
             required: true
         },
         {
@@ -73,44 +58,62 @@ const LiveBreak: CollectionConfig = {
             required: true
         },
         {
-            name: 'seller',
-            type: 'relationship',
-            relationTo: 'user',
-            access: {
-                read: () => true
-            },
-            admin: {
-                readOnly: true,
-                position: 'sidebar',
-                condition: (data) => Boolean(data?.seller)
-            }
-        },
-        {
-            name: 'published',
-            type: 'checkbox',
-            access: {
-                read: () => true,
-                update: isAdmin
-            },
-            admin: {
-                position: 'sidebar',
-                condition: (data) => Boolean(data?.published)
-            }
-        }
-    ],
-    hooks: {
-        beforeChange: [
-            ({ req, operation, data }) => {
-                if (operation === 'create') {
-                    if (req.user) {
-                        data.seller = req.user.id;
-                        data.published = false;
-                        return data;
-                    }
+            name: 'leagueTeam',
+            type: 'array',
+            fields: [
+                {
+                    name: 'image',
+                    type: 'upload',
+                    relationTo: 'media',
+                    required: true
+                },
+                {
+                    name: 'team',
+                    type: 'select',
+                    options: [
+                        'Dallas Mavericks',
+                        'Denver Nuggets',
+                        'Golden State Warriors',
+                        'Houston Rockets',
+                        'Los Angeles Clippers',
+                        'Los Angeles Lakers',
+                        'Memphis Grizzlies',
+                        'Minnesota Timberwolves',
+                        'New Orleans Pelicans',
+                        'Oklahoma City Thunder',
+                        'Phoenix Suns',
+                        'Portland Trail Blazers',
+                        'Sacramento Kings',
+                        'San Antonio Spurs',
+                        'Utah Jazz',
+                        'Atlanta Hawks',
+                        'Boston Celtics',
+                        'Brooklyn Nets',
+                        'Charlotte Hornets',
+                        'Chicago Bulls',
+                        'Cleveland Cavaliers',
+                        'Detroit Pistons',
+                        'Indiana Pacers',
+                        'Miami Heat',
+                        'Milwaukee Bucks',
+                        'New York Knicks',
+                        'Orlando Magic',
+                        'Philadelphia 76ers',
+                        'Toronto Raptors',
+                        'Washington Wizards'
+                    ],
+                    required: true
+                },
+                {
+                    name: 'price',
+                    type: 'number',
+                    min: 0.01,
+                    required: true
                 }
-            }
-        ]
-    }
+            ],
+            required: true
+        }
+    ]
 };
 
 export default LiveBreak;
