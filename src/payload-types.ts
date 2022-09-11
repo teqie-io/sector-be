@@ -17,33 +17,64 @@ export interface User {
     resetPasswordExpiration?: string;
     loginAttempts?: number;
     lockUntil?: string;
-    fullName: string;
+    firstName?: string;
+    lastName?: string;
+    googleId?: string;
+    facebookId?: string;
+    role: 'admin' | 'user';
     createdAt: string;
     updatedAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "product".
+ * via the `definition` "card".
  */
-export interface Product {
+export interface Card {
     id: string;
-    url?: string;
-    filename?: string;
-    mimeType?: string;
-    filesize?: number;
     image: string | Media;
-    name: string;
     playerName: string;
-    type?: 'Single cards' | 'Boxes';
+    type: 'Single cards' | 'Boxes';
+    marketType: 'Shop' | 'Marketplace';
     sportType: string;
-    year: string;
+    year: number;
     price: number;
-    leagueTeam: 'NBA' | 'NFL' | 'MLB' | 'NHL' | 'Random team';
-    seller: string | User;
+    leagueTeam:
+        | 'Dallas Mavericks'
+        | 'Denver Nuggets'
+        | 'Golden State Warriors'
+        | 'Houston Rockets'
+        | 'Los Angeles Clippers'
+        | 'Los Angeles Lakers'
+        | 'Memphis Grizzlies'
+        | 'Minnesota Timberwolves'
+        | 'New Orleans Pelicans'
+        | 'Oklahoma City Thunder'
+        | 'Phoenix Suns'
+        | 'Portland Trail Blazers'
+        | 'Sacramento Kings'
+        | 'San Antonio Spurs'
+        | 'Utah Jazz'
+        | 'Atlanta Hawks'
+        | 'Boston Celtics'
+        | 'Brooklyn Nets'
+        | 'Charlotte Hornets'
+        | 'Chicago Bulls'
+        | 'Cleveland Cavaliers'
+        | 'Detroit Pistons'
+        | 'Indiana Pacers'
+        | 'Miami Heat'
+        | 'Milwaukee Bucks'
+        | 'New York Knicks'
+        | 'Orlando Magic'
+        | 'Philadelphia 76ers'
+        | 'Toronto Raptors'
+        | 'Washington Wizards';
     specialFeature: string;
     brand: string;
     gradeBy: string;
     rating: number;
+    seller?: string | User;
+    published?: boolean;
     createdAt: string;
     updatedAt: string;
 }
@@ -63,24 +94,11 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "favourite-product".
+ * via the `definition` "hot-card".
  */
-export interface FavouriteProduct {
+export interface HotCard {
     id: string;
-    user: string | User;
-    product: string | Product;
-    createdAt: string;
-    updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "bidding".
- */
-export interface Bidding {
-    id: string;
-    product: string | Product;
-    user: string | User;
-    price: number;
+    hotCard: string | Card;
     createdAt: string;
     updatedAt: string;
 }
@@ -90,21 +108,103 @@ export interface Bidding {
  */
 export interface LiveBreak {
     id: string;
-    url?: string;
-    filename?: string;
-    mimeType?: string;
-    filesize?: number;
     image: string | Media;
     name: string;
     sportType: string;
-    year: string;
-    price: number;
-    leagueTeam?: 'NBA' | 'NFL' | 'MLB' | 'NHL' | 'Random team';
-    seller: string | User;
-    specialFeature: string;
+    year: number;
     brand: string;
-    gradeBy: string;
-    rating: number;
+    leagueTeam: {
+        image: string | Media;
+        team:
+            | 'Dallas Mavericks'
+            | 'Denver Nuggets'
+            | 'Golden State Warriors'
+            | 'Houston Rockets'
+            | 'Los Angeles Clippers'
+            | 'Los Angeles Lakers'
+            | 'Memphis Grizzlies'
+            | 'Minnesota Timberwolves'
+            | 'New Orleans Pelicans'
+            | 'Oklahoma City Thunder'
+            | 'Phoenix Suns'
+            | 'Portland Trail Blazers'
+            | 'Sacramento Kings'
+            | 'San Antonio Spurs'
+            | 'Utah Jazz'
+            | 'Atlanta Hawks'
+            | 'Boston Celtics'
+            | 'Brooklyn Nets'
+            | 'Charlotte Hornets'
+            | 'Chicago Bulls'
+            | 'Cleveland Cavaliers'
+            | 'Detroit Pistons'
+            | 'Indiana Pacers'
+            | 'Miami Heat'
+            | 'Milwaukee Bucks'
+            | 'New York Knicks'
+            | 'Orlando Magic'
+            | 'Philadelphia 76ers'
+            | 'Toronto Raptors'
+            | 'Washington Wizards';
+        price: number;
+        id?: string;
+    }[];
+    createdAt: string;
+    updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hot-live-break".
+ */
+export interface HotLiveBreak {
+    id: string;
+    hotLiveBreak?: string | Card;
+    createdAt: string;
+    updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "favourite-product".
+ */
+export interface FavouriteProduct {
+    id: string;
+    user: string | User;
+    card: string | Card;
+    createdAt: string;
+    updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bidding".
+ */
+export interface Bidding {
+    id: string;
+    card: string | Card;
+    user: string | User;
+    price: number;
+    createdAt: string;
+    updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "checkout".
+ */
+export interface Checkout {
+    id: string;
+    transactionId: string;
+    totalAmount: number;
+    checkoutTime: string;
+    type: string;
+    paymentMethod: string;
+    status?: string;
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    postCode: string;
+    email: string;
+    phoneNumber: string;
     createdAt: string;
     updatedAt: string;
 }
