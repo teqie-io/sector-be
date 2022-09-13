@@ -17,7 +17,9 @@ const HotLiveBreak: CollectionConfig = {
             name: 'hotLiveBreak',
             type: 'relationship',
             relationTo: 'card',
-            unique: true
+            unique: true,
+            hasMany: false,
+            required: true
         }
     ]
 };

@@ -5,7 +5,7 @@ const LiveBreak: CollectionConfig = {
     slug: 'liveBreak',
     admin: {
         useAsTitle: 'name',
-        defaultColumns: ['name', 'sportType', 'year']
+        defaultColumns: ['name', 'sportType', 'brand', 'year']
     },
     access: {
         read: () => true,
@@ -88,9 +88,9 @@ const LiveBreak: CollectionConfig = {
                         'Utah Jazz',
                         'Atlanta Hawks',
                         'Boston Celtics',
+                        'Chicago Bulls',
                         'Brooklyn Nets',
                         'Charlotte Hornets',
-                        'Chicago Bulls',
                         'Cleveland Cavaliers',
                         'Detroit Pistons',
                         'Indiana Pacers',
@@ -112,7 +112,22 @@ const LiveBreak: CollectionConfig = {
                 }
             ],
             required: true
-        }
+        },
+        {
+            name: 'overview',
+            type: 'richText',
+            required: true,
+        },
+        {
+            name: 'detail',
+            type: 'richText',
+            required: true
+        },
+        {
+            name: 'shipping',
+            type: 'richText',
+            required: true,
+        },
     ]
 };
 

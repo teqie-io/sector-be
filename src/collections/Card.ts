@@ -5,7 +5,7 @@ const Card: CollectionConfig = {
     slug: 'card',
     admin: {
         useAsTitle: 'playerName',
-        defaultColumns: ['playerName', 'brand', 'year']
+        defaultColumns: ['playerName', 'brand', 'year', 'type', 'published']
     },
     access: {
         read: isAdminOrSellerOrPublished,
@@ -123,6 +123,21 @@ const Card: CollectionConfig = {
             required: true
         },
         {
+            name: 'overview',
+            type: 'richText',
+            required: true,
+        },
+        {
+            name: 'detail',
+            type: 'richText',
+            required: true,
+        },
+        {
+            name: 'shipping',
+            type: 'richText',
+            required: true,
+        },
+        {
             name: 'gradeBy',
             type: 'text',
             index: true,
@@ -161,7 +176,8 @@ const Card: CollectionConfig = {
                 position: 'sidebar',
                 condition: (data) => Boolean(data?.published)
             }
-        }
+        },
+
     ],
     hooks: {
         beforeChange: [
