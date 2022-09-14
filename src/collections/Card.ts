@@ -5,7 +5,7 @@ const Card: CollectionConfig = {
     slug: 'card',
     admin: {
         useAsTitle: 'playerName',
-        defaultColumns: ['playerName', 'brand', 'year', 'type', 'published']
+        defaultColumns: ['playerName', 'brand', 'year', 'published', 'hot']
     },
     access: {
         read: isAdminOrSellerOrPublished,
@@ -125,17 +125,17 @@ const Card: CollectionConfig = {
         {
             name: 'overview',
             type: 'richText',
-            required: true,
+            required: true
         },
         {
             name: 'detail',
             type: 'richText',
-            required: true,
+            required: true
         },
         {
             name: 'shipping',
             type: 'richText',
-            required: true,
+            required: true
         },
         {
             name: 'gradeBy',
@@ -161,8 +161,50 @@ const Card: CollectionConfig = {
             },
             admin: {
                 readOnly: true,
+                position: 'sidebar'
+            }
+        },
+        {
+            name: 'hot',
+            type: 'select',
+            unique: true,
+            options: [
+                {
+                    label: 'None',
+                    value: '0'
+                },
+                {
+                    label: 'Top 1',
+                    value: '1'
+                },
+                {
+                    label: 'Top 2',
+                    value: '2'
+                },
+                {
+                    label: 'Top 3',
+                    value: '3'
+                },
+                {
+                    label: 'Top 4',
+                    value: '4'
+                },
+                {
+                    label: 'Top 5',
+                    value: '5'
+                },
+                {
+                    label: 'Top 6',
+                    value: '6'
+                }
+            ],
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.seller)
+                condition: (data) => Boolean(data?.published)
             }
         },
         {
@@ -173,11 +215,9 @@ const Card: CollectionConfig = {
                 update: isAdmin
             },
             admin: {
-                position: 'sidebar',
-                condition: (data) => Boolean(data?.published)
+                position: 'sidebar'
             }
-        },
-
+        }
     ],
     hooks: {
         beforeChange: [

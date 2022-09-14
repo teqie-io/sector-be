@@ -1,7 +1,7 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
 
-import { User, Card, HotCard, LiveBreak, HotLiveBreak, FavouriteProduct, Bidding, Checkout } from './collections';
+import { User, Card, LiveBreak, FavouriteProduct, Bidding, Checkout } from './collections';
 
 export default buildConfig({
     admin: {
@@ -11,9 +11,7 @@ export default buildConfig({
     collections: [
         User,
         Card,
-        HotCard,
         LiveBreak,
-        HotLiveBreak,
         FavouriteProduct,
         Bidding,
         Checkout,
