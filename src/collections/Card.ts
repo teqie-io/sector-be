@@ -5,7 +5,7 @@ const Card: CollectionConfig = {
     slug: 'card',
     admin: {
         useAsTitle: 'playerName',
-        defaultColumns: ['playerName', 'brand', 'year']
+        defaultColumns: ['playerName', 'brand', 'published', 'showOnHome', 'showPosition']
     },
     access: {
         read: isAdminOrSellerOrPublished,
@@ -123,6 +123,21 @@ const Card: CollectionConfig = {
             required: true
         },
         {
+            name: 'overview',
+            type: 'richText',
+            required: true
+        },
+        {
+            name: 'detail',
+            type: 'richText',
+            required: true
+        },
+        {
+            name: 'shipping',
+            type: 'richText',
+            required: true
+        },
+        {
             name: 'gradeBy',
             type: 'text',
             index: true,
@@ -146,8 +161,34 @@ const Card: CollectionConfig = {
             },
             admin: {
                 readOnly: true,
+                position: 'sidebar'
+            }
+        },
+        {
+            name: 'showOnHome',
+            type: 'checkbox',
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.seller)
+                condition: (data) => Boolean(data?.published)
+            }
+        },
+        {
+            name: 'showPosition',
+            type: 'number',
+            min: 1,
+            max: 6,
+            unique: true,
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
+                position: 'sidebar',
+                condition: (data) => Boolean(data?.showOnHome)
             }
         },
         {
@@ -158,8 +199,7 @@ const Card: CollectionConfig = {
                 update: isAdmin
             },
             admin: {
-                position: 'sidebar',
-                condition: (data) => Boolean(data?.published)
+                position: 'sidebar'
             }
         }
     ],

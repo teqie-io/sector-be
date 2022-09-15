@@ -71,9 +71,19 @@ export interface Card {
         | 'Washington Wizards';
     specialFeature: string;
     brand: string;
+    overview: {
+        [k: string]: unknown;
+    }[];
+    detail: {
+        [k: string]: unknown;
+    }[];
+    shipping: {
+        [k: string]: unknown;
+    }[];
     gradeBy: string;
     rating: number;
     seller?: string | User;
+    hot?: '1' | '2' | '3' | '4' | '5' | '6';
     published?: boolean;
     createdAt: string;
     updatedAt: string;
@@ -89,16 +99,6 @@ export interface Media {
     mimeType?: string;
     filesize?: number;
     alt?: string;
-    createdAt: string;
-    updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hot-card".
- */
-export interface HotCard {
-    id: string;
-    hotCard: string | Card;
     createdAt: string;
     updatedAt: string;
 }
@@ -133,9 +133,9 @@ export interface LiveBreak {
             | 'Utah Jazz'
             | 'Atlanta Hawks'
             | 'Boston Celtics'
+            | 'Chicago Bulls'
             | 'Brooklyn Nets'
             | 'Charlotte Hornets'
-            | 'Chicago Bulls'
             | 'Cleveland Cavaliers'
             | 'Detroit Pistons'
             | 'Indiana Pacers'
@@ -149,16 +149,16 @@ export interface LiveBreak {
         price: number;
         id?: string;
     }[];
-    createdAt: string;
-    updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "hot-live-break".
- */
-export interface HotLiveBreak {
-    id: string;
-    hotLiveBreak?: string | Card;
+    overview: {
+        [k: string]: unknown;
+    }[];
+    detail: {
+        [k: string]: unknown;
+    }[];
+    shipping: {
+        [k: string]: unknown;
+    }[];
+    hot?: '1' | '2' | '3' | '4' | '5' | '6';
     createdAt: string;
     updatedAt: string;
 }

@@ -5,7 +5,7 @@ const LiveBreak: CollectionConfig = {
     slug: 'liveBreak',
     admin: {
         useAsTitle: 'name',
-        defaultColumns: ['name', 'sportType', 'year']
+        defaultColumns: ['name', 'sportType', 'brand', 'showOnHome', 'showPosition']
     },
     access: {
         read: () => true,
@@ -88,9 +88,9 @@ const LiveBreak: CollectionConfig = {
                         'Utah Jazz',
                         'Atlanta Hawks',
                         'Boston Celtics',
+                        'Chicago Bulls',
                         'Brooklyn Nets',
                         'Charlotte Hornets',
-                        'Chicago Bulls',
                         'Cleveland Cavaliers',
                         'Detroit Pistons',
                         'Indiana Pacers',
@@ -112,6 +112,47 @@ const LiveBreak: CollectionConfig = {
                 }
             ],
             required: true
+        },
+        {
+            name: 'overview',
+            type: 'richText',
+            required: true
+        },
+        {
+            name: 'detail',
+            type: 'richText',
+            required: true
+        },
+        {
+            name: 'shipping',
+            type: 'richText',
+            required: true
+        },
+        {
+            name: 'showOnHome',
+            type: 'checkbox',
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
+                position: 'sidebar'
+            }
+        },
+        {
+            name: 'showPosition',
+            type: 'number',
+            min: 1,
+            max: 6,
+            unique: true,
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
+                position: 'sidebar',
+                condition: (data) => Boolean(data?.showOnHome)
+            }
         }
     ]
 };
