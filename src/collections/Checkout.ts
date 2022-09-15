@@ -9,6 +9,13 @@ const Checkout: CollectionConfig = {
     },
     fields: [
         {
+            name: 'order',
+            type: 'relationship',
+            relationTo: 'order',
+            index: true,
+            required: true
+        },
+        {
             name: 'transactionId',
             type: 'text',
             required: true

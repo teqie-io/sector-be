@@ -8,6 +8,13 @@ const OrderDetails: CollectionConfig = {
             relationTo: 'order',
             index: true,
             required: true
+        },
+        {
+            name: 'card',
+            type: 'relationship',
+            relationTo: 'card',
+            index: true,
+            required: true
         }
     ]
 }
