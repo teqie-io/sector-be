@@ -5,7 +5,7 @@ const Card: CollectionConfig = {
     slug: 'card',
     admin: {
         useAsTitle: 'playerName',
-        defaultColumns: ['playerName', 'brand', 'year', 'published', 'hot']
+        defaultColumns: ['playerName', 'brand', 'published', 'showOnHome', 'showPosition']
     },
     access: {
         read: isAdminOrSellerOrPublished,
@@ -165,39 +165,8 @@ const Card: CollectionConfig = {
             }
         },
         {
-            name: 'hot',
-            type: 'select',
-            unique: true,
-            options: [
-                {
-                    label: 'None',
-                    value: '0'
-                },
-                {
-                    label: 'Top 1',
-                    value: '1'
-                },
-                {
-                    label: 'Top 2',
-                    value: '2'
-                },
-                {
-                    label: 'Top 3',
-                    value: '3'
-                },
-                {
-                    label: 'Top 4',
-                    value: '4'
-                },
-                {
-                    label: 'Top 5',
-                    value: '5'
-                },
-                {
-                    label: 'Top 6',
-                    value: '6'
-                }
-            ],
+            name: 'showOnHome',
+            type: 'checkbox',
             access: {
                 read: () => true,
                 update: isAdmin
@@ -205,6 +174,21 @@ const Card: CollectionConfig = {
             admin: {
                 position: 'sidebar',
                 condition: (data) => Boolean(data?.published)
+            }
+        },
+        {
+            name: 'showPosition',
+            type: 'number',
+            min: 1,
+            max: 6,
+            unique: true,
+            access: {
+                read: () => true,
+                update: isAdmin
+            },
+            admin: {
+                position: 'sidebar',
+                condition: (data) => Boolean(data?.showOnHome)
             }
         },
         {
