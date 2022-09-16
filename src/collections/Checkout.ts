@@ -9,14 +9,12 @@ const Checkout: CollectionConfig = {
     },
     fields: [
         {
-            name: 'order',
-            type: 'relationship',
-            relationTo: 'order',
-            index: true,
+            name: 'transactionId',
+            type: 'text',
             required: true
         },
         {
-            name: 'transactionId',
+            name: 'currency',
             type: 'text',
             required: true
         },
@@ -25,7 +23,15 @@ const Checkout: CollectionConfig = {
             type: 'number',
             min: 0,
             index: true,
-            required: true
+            required: true,
+            validate: (value) => {
+                if (Number.isInteger(value)) {
+                    if (value < 0 || value > 999999) {
+                        return `Your total amount must be less than $999,999 (${value})`;
+                    }
+                }
+                return `"${value}" is not an integer.`;
+            }
         },
         {
             name: 'checkoutTime',

@@ -3,9 +3,9 @@ const OrderDetails: CollectionConfig = {
     slug: 'orderDetails',
     fields: [
         {
-            name: 'order',
+            name: 'checkout',
             type: 'relationship',
-            relationTo: 'order',
+            relationTo: 'checkout',
             index: true,
             required: true
         },
@@ -14,6 +14,27 @@ const OrderDetails: CollectionConfig = {
             type: 'relationship',
             relationTo: 'card',
             index: true,
+            required: true
+        },
+        {
+            name: 'productName',
+            type: 'text',
+            required: true
+        },
+        {
+            name: 'productPrice',
+            type: 'number',
+            min: 0.01,
+            required: true
+        },
+        {
+            name: 'productDiscount',
+            type: 'number',
+            required: true
+        },
+        {
+            name: 'productFinalPrice',
+            type: 'number',
             required: true
         }
     ]
