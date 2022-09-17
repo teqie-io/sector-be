@@ -188,7 +188,7 @@ const Card: CollectionConfig = {
             },
             admin: {
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.showOnHome)
+                condition: (data) => Boolean(data?.showOnHome && data?.published)
             }
         },
         {
