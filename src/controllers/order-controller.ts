@@ -7,6 +7,8 @@ require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const createPaymentIntent = async (req: express.Request, res: express.Response) => {
+    payload.logger.info(`START POST--------------- /orders/create-payment-intent with data: ${JSON.stringify(req.body)}`);
+    let jsonData;
     const totalAmount: number = req.body.totalAmount;
     const currency = req.body.currency;
     const paymentMethodType = req.body.paymentMethodType;
@@ -26,12 +28,13 @@ const createPaymentIntent = async (req: express.Request, res: express.Response) 
         });
     } catch (ex) {
         payload.logger.error(ex);
-
-        res.status(400).send({
-            error: {
-                message: ex.message
-            }
-        });
+        jsonData = {
+            status: 99,
+            message: 'System error'
+        }
+        res.status(400).send(jsonData);
+    } finally {
+        payload.logger.info(`END POST--------------- /orders/create-payment-intent with response: ${JSON.stringify(jsonData)}`);
     }
 };
 

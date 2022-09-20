@@ -9,7 +9,7 @@ require('dotenv').config();
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const CheckoutController = require('./controllers/checkout-controller');
+const OrderController = require('./controllers/order-controller');
 
 passport.use(passportFacebookStrategy);
 passport.use(passportGoogleStrategy);
@@ -42,8 +42,8 @@ app.get(
 );
 
 // Payment
-app.post('/api/checkout/create-payment-intent', CheckoutController.createPaymentIntent);
-app.post('/api/checkout/confirm-payment', CheckoutController.confirmPayment);
+app.post('/api/orders/create-payment-intent', OrderController.createPaymentIntent);
+app.post('/api/orders/confirm-payment', OrderController.confirmPayment);
 
 // Redirect root to Admin panel
 app.get('/', (_, res) => {
