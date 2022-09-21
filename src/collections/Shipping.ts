@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload/types';
 const Shipping: CollectionConfig = {
-    slug: 'shipping',
+    slug: 'shippings',
     access: {
         read: () => true
     },

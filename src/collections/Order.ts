@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload/types';
-const Checkout: CollectionConfig = {
-    slug: 'checkout',
+const Order: CollectionConfig = {
+    slug: 'orders',
     admin: {
         useAsTitle: 'transactionId'
     },
@@ -11,7 +11,7 @@ const Checkout: CollectionConfig = {
         {
             name: 'shipping',
             type: 'relationship',
-            relationTo: 'shipping',
+            relationTo: 'shippings',
             required: true
         },
         {
@@ -61,4 +61,4 @@ const Checkout: CollectionConfig = {
     ]
 };
 
-export default Checkout;
+export default Order;

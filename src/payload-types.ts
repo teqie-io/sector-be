@@ -189,9 +189,9 @@ export interface Bidding {
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "checkout".
+ * via the `definition` "order".
  */
-export interface Checkout {
+export interface Order {
     id: string;
     transactionId: string;
     totalAmount: number;
@@ -205,7 +205,7 @@ export interface Checkout {
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "checkout".
+ * via the `definition` "shipping".
  */
 export interface Shipping {
     id: string;
