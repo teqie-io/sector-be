@@ -5,3 +5,4 @@ export { default as FavouriteProduct } from './FavouriteProduct';
 export { default as Checkout } from './Checkout';
 export { default as Bidding } from './Bidding';
 export { default as OrderDetails } from './OrderDetails';
+export { default as Shipping } from './Shipping';

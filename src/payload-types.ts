@@ -173,6 +173,7 @@ export interface FavouriteProduct {
     createdAt: string;
     updatedAt: string;
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "bidding".
@@ -185,6 +186,7 @@ export interface Bidding {
     createdAt: string;
     updatedAt: string;
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "checkout".
@@ -197,6 +199,16 @@ export interface Checkout {
     type: string;
     paymentMethod: string;
     status?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "checkout".
+ */
+export interface Shipping {
+    id: string;
     firstName: string;
     lastName: string;
     address: string;

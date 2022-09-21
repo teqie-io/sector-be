@@ -1,7 +1,7 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
 
-import { User, Card, LiveBreak, FavouriteProduct, Bidding, Checkout } from './collections';
+import { User, Card, LiveBreak, FavouriteProduct, Bidding, Checkout, Shipping } from './collections';
 
 export default buildConfig({
     admin: {
@@ -15,6 +15,7 @@ export default buildConfig({
         FavouriteProduct,
         Bidding,
         Checkout,
+        Shipping,
         {
             slug: 'media',
             access: {
