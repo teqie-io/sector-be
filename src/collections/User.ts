@@ -45,7 +45,7 @@ const User: CollectionConfig = {
             },
             admin: {
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.seller)
+                condition: (data) => true
             }
         }
     ],
