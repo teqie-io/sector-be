@@ -45,7 +45,7 @@ const User: CollectionConfig = {
             },
             admin: {
                 position: 'sidebar',
-                condition: (data) => true
+                condition: () => true
             }
         }
     ],
@@ -53,10 +53,8 @@ const User: CollectionConfig = {
         beforeChange: [
             ({ req, operation, data }) => {
                 if (operation === 'create') {
-                    if (req.user) {
-                        data.role = 'user';
-                        return data;
-                    }
+                    data.role = 'user';
+                    return data;
                 }
             }
         ]

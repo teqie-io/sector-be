@@ -35,7 +35,7 @@ const passportFacebookStrategy = new passportFacebook.Strategy(
                 data: {
                     firstName: givenName,
                     lastName: familyName,
-                    email: `${id}@fb.com`,
+                    email: '',
                     facebookId: id,
                     password: 'later-fix'
                 }
